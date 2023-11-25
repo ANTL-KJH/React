@@ -1,0 +1,134 @@
+.App {
+  text-align: center;
+}
+.black-nav{
+  display: flex;
+  background: black;
+  width: 100%;
+  color:white;
+  padding-left: 20px;
+}
+
+div{
+  box-sizing: border-box;
+}
+.list{
+  padding-left: 20px;
+  text-align: left;
+  border-bottom: 1px solid gray;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.button1 {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button1 {
+  background-color: #2980b9;
+}
+
+.button2 {
+  padding: 8px 16px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button2.button1 {
+  background-color: #218c54;
+}
+.modal{
+  margin-top: 20px;
+  padding:20px;
+  background: #eee;
+  text-align: left;
+}
+.button_heart {
+  padding: 6px 8px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button_heart:hover {
+  background-color: #e84343;
+}
+/* 입력 버튼 디자인 */
+.buttonInput {
+  padding: 6px 10px;
+  background-color: #3498db;
+  color: white;
+  margin-left: 3px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buttonInput:hover {
+  background-color: #2980b9;
+}
+/* 삭제 버튼 디자인 */
+.deleteButton {
+  padding: 6px 10px;
+  background-color: #ff5252;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.deleteButton:hover {
+  background-color: #ff0000;
+}
