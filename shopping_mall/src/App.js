@@ -11,6 +11,7 @@ import Error from "./Pages/Error";
 import ErrorPage from "./Pages/Error";
 import Cart from "./Pages/Cart";
 import RegisterPage from "./Pages/SignUp";
+import Login from "./Pages/Login";
 
 function App() {
   let [productData] = useState(shoesData);
@@ -33,7 +34,7 @@ function App() {
                 <Route path="location" element={<About/>}/>
             </Route>
             <Route path="/error" element={<div><ErrorPage></ErrorPage></div>}></Route>
-            <Route path="/login" element={<div>login</div>}></Route>
+            <Route path="/login" element={<Login/>}></Route>
             <Route path="/signup" element={<RegisterPage/>}></Route>
             <Route path="*" element={<div><NotFoundPage/>찾을 수 없는 페이지입니다.</div>}/>
         </Routes>
@@ -51,12 +52,13 @@ function  MainNavbar({navigate}){
     return(
         <div>
             <div className="navbar">
-                <img className="navImg" src={process.env.PUBLIC_URL + '/img/A-mall2.png'} />
+                <Link className="navImg" to={'/'}>
+                    <img className="navImg" src={process.env.PUBLIC_URL + '/img/A-mall2.png'} /></Link>
                 <div className="navbarMenuGroup">
                     <Link className="navbarMenuLeft" to={'/'}>Home</Link>
                     <Link className="navbarMenuLeft" to={'/cart'}>Cart</Link>
-                    <Link className="navbarMenuLeft" to={'/cart'}>Event</Link>
-                    <Link className="navbarMenuLeft" to={'/cart'}>About</Link>
+                    <Link className="navbarMenuLeft" to={'/event'}>Event</Link>
+                    <Link className="navbarMenuLeft" to={'/about'}>About</Link>
                 </div>
                 <div className="navbarMenuRightGroup">
                     <Link className="navbarMenuRight" to={'/login'}>로그인</Link>

@@ -77,9 +77,10 @@
 
 .navbarMenuGroup {
   width: 100px;
-  margin-left: 1%;
+  margin-left: 35px;
   display: flex;
   align-items: center;
+  margin-right: auto;
 }
 
 .navbarMenuRightGroup {
@@ -89,7 +90,6 @@
   align-items: center;
   margin-left: auto;
 }
-
 
 
 {/*.main-bg {
