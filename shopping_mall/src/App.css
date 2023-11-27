@@ -36,6 +36,26 @@
     transform: rotate(360deg);
   }
 }
+.redirectContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.contentWrapper {
+  text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.redirectImage1 {
+  max-width: 20%; /* 이미지가 부모 요소를 넘지 않도록 설정 */
+  max-height: 20%; /* 이미지가 부모 요소를 넘지 않도록 설정 */
+
+  margin: 0 auto; /* 이미지를 가로로 가운데 정렬 */
+}
+
+
+
 
 {/*.main-bg {
   height:300px;
