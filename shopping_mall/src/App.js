@@ -10,30 +10,21 @@ import axios from "axios";
 import Error from "./Pages/Error";
 import ErrorPage from "./Pages/Error";
 import Cart from "./Pages/Cart";
+import RegisterPage from "./Pages/SignUp";
 
 function App() {
   let [productData] = useState(shoesData);
   let navigate = useNavigate();
   return (
     <div className="App">
+        <MainNavbar navigate={navigate}></MainNavbar>
 
 
-        <Navbar bg="light" data-bs-theme="light">
-            <Container>
-                <Navbar.Brand href="/"><img src ={process.env.PUBLIC_URL + '/img/Amall-logo3.png'} width="100px" /></Navbar.Brand>
-                <Nav className="me-auto">
-                    <Nav.Link onClick={()=>navigate("/")}>Home</Nav.Link>
-                    <Nav.Link onClick={()=>navigate("/cart")}>Cart</Nav.Link>
-                    <Nav.Link onClick={()=>navigate("/event")}>Event</Nav.Link>
-                    <Nav.Link onClick={()=>navigate("/about")}>About</Nav.Link>
-                </Nav>
-            </Container>
-        </Navbar>
         <Routes>
             {/* 페이지 개수만큼 선언*/}
             <Route path="/" element={<div><ProductCard></ProductCard></div>}/>
             <Route path="/cart" element={<Cart/>}/>
-            <Route path="/product/:idx" element={<div><Product productData={productData}></Product></div>}/>
+            <Route path="/product/:idx" element={<div><Product ></Product></div>}/>
             <Route path="/event" element={<div><h4>오늘의 이벤트</h4><Outlet></Outlet></div>}>
                 <Route path="one" element={<p>첫 주문시 5000원 할인</p>}/>
             </Route>
@@ -42,6 +33,8 @@ function App() {
                 <Route path="location" element={<About/>}/>
             </Route>
             <Route path="/error" element={<div><ErrorPage></ErrorPage></div>}></Route>
+            <Route path="/login" element={<div>login</div>}></Route>
+            <Route path="/signup" element={<RegisterPage/>}></Route>
             <Route path="*" element={<div><NotFoundPage/>찾을 수 없는 페이지입니다.</div>}/>
         </Routes>
 
@@ -54,13 +47,29 @@ function App() {
     </div>
   );
 }
-
-function About(){
+function  MainNavbar({navigate}){
     return(
         <div>
-            <h4>회사정보</h4>
-            <Outlet></Outlet>
+            <div className="navbar">
+                <img className="navImg" src={process.env.PUBLIC_URL + '/img/A-mall2.png'} />
+                <div className="navbarMenuGroup">
+                    <Link className="navbarMenuLeft" to={'/'}>Home</Link>
+                    <Link className="navbarMenuLeft" to={'/cart'}>Cart</Link>
+                    <Link className="navbarMenuLeft" to={'/cart'}>Event</Link>
+                    <Link className="navbarMenuLeft" to={'/cart'}>About</Link>
+                </div>
+                <div className="navbarMenuRightGroup">
+                    <Link className="navbarMenuRight" to={'/login'}>로그인</Link>
+                    <Link className="navbarMenuRight" to={'/signup'}>회원가입</Link>
+                </div>
+            </div>
         </div>
+
+    )
+}
+function About(){
+    return(
+        <div></div>
     )
 }
 

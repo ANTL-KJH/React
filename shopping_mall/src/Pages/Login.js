@@ -1,4 +1,4 @@
-import styles from './Home.module.css';
+import styles from './SignUp.module.css';
 import {useNavigate} from 'react-router-dom';
 import {useSelector} from "react-redux";
 function ProductCard() {

@@ -1,0 +1,19 @@
+
+.signUpImg{
+    width: 300px;
+}
+.signUpText{
+    font-size: 22px;
+    font-weight: bold;
+    margin: 7px;
+
+}
+.signUpInputBox{
+    font-size: 18px;
+    width: 500px;
+    height: 50px;
+}
+.signUpSubmitButton{
+    width: 500px;
+    height: 50px;
+}

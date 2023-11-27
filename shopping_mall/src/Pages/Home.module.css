@@ -1,0 +1,16 @@
+.customMainRow {
+    padding-left: 15%;
+    padding-right: 15%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.customCol {
+    width: calc(100% / 3); /* 3열의 경우, 각 컬럼은 총 가로 길이의 1/3을 차지하도록 설정 */
+    box-sizing: border-box;
+    padding: 0 10px; /* 컬럼 사이의 간격을 위한 패딩 */
+}
+
+.customCol img {
+    width: 80%;
+}

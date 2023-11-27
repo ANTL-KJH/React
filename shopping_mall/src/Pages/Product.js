@@ -8,20 +8,21 @@ import {useSelector} from "react-redux";
 function Product(props){
     let {idx} = useParams();
     let [tab, setTab] = useState(0);
+    const productData = useSelector((state) => state.productData);
     return(
         <div className="container">
             <div className="row">
                 <div className="col-md-6">
-                    <img src={process.env.PUBLIC_URL + props.productData[idx].imagePath} width="80%" />
-            </div>
+                    <img src={process.env.PUBLIC_URL + productData[idx].imagePath} width="80%" />
+                </div>
                 <div className="col-md-6 mt-4">
-                    <h4 className="pt-5">{props.productData[idx].title}</h4>
-                    <p>{props.productData[idx].content}</p>
-                    <p>{props.productData[idx].price}원</p>
+                    <h4 className="pt-5">{productData[idx].title}</h4>
+                    <p>{productData[idx].content}</p>
+                    <p>{productData[idx].price}원</p>
                     <button className={styles.addCart}>장바구니</button>
                     <button className={styles.btnPurchase}>주문하기</button>
-                    </div>
-        </div>
+                </div>
+            </div>
             <Nav variant="tabs" defaultActiveKey ="link0">
                 <Nav.Item>
                     <Nav.Link  eventKey="link0" onClick={() => { setTab(0) }}>상품설명</Nav.Link>
@@ -33,7 +34,7 @@ function Product(props){
                     <Nav.Link eventKey="link2" onClick={()=>{setTab(2)}}>Q&A</Nav.Link>
                 </Nav.Item>
             </Nav>
-            <TabContent tab={tab} productData={props.productData} idx={idx}/>
+            <TabContent tab={tab} productData={productData} idx={idx}/>
         </div>
 
     )
