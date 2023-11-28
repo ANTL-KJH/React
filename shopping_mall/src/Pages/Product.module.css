@@ -68,3 +68,32 @@
     max-width: 800px;
 
 }
+
+@media (max-width: 768px) {
+    .customRow {
+        flex-direction: column;
+    }
+    .customColImage,
+    .customColContent {
+        width: 100%;
+    }
+}
+
+.customRow {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 추가: 수직 가운데 정렬 */
+}
+
+.customColImage {
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+}
+
+.customColContent {
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+    text-align: center; /* 추가: 내용 가운데 정렬 */
+}

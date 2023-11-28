@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from "./SignUp.module.css"
 import {Link} from "react-router-dom";
-
+import axios from "axios";
 const Signup = () => {
     const [formData, setFormData] = useState({
         username: '',
@@ -12,11 +12,22 @@ const Signup = () => {
 
     const [isChecked, setIsChecked] = useState(false);
     const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        // 모든 체크박스가 선택되었을 때 버튼을 활성화합니다.
-        setIsButtonEnabled(isChecked);
-    }, [isChecked]);
+        // 모든 입력값이 채워졌는지 확인
+        const isFormFilled =
+            formData.username !== '' &&
+            formData.email !== '' &&
+            formData.password !== '' &&
+            formData.confirmPassword !== '' &&
+            formData.address !== '' &&
+            formData['phone number'] !== '' &&
+            formData.gender !== '';
+
+        // 모든 입력값이 채워졌으면 버튼 활성화
+        setIsButtonEnabled(isChecked && isFormFilled);
+    }, [isChecked, formData]);
     const handleChange = (e) => {
         const {name, value} = e.target;
         setFormData({...formData, [name]: value});
@@ -27,18 +38,34 @@ const Signup = () => {
     const handleBlur = (e) => {
         const {name} = e.target;
         if (!formData[name]) {
-            e.target.placeholder = name === 'username' ? '이름' : name === 'email' ? '아이디(이메일)' : name === 'password'?'비밀번호': name === 'password confirm'? '비밀번호 확인': name ==="address"?'주소': name === "phone number"?"연락처":null;
+            e.target.placeholder = name === 'username' ? '이름' : name === 'email' ? '아이디(이메일)' : name === 'password' ? '비밀번호' : name === 'confirmPassword' ? '비밀번호 확인' : name === "address" ? '주소' : name === "phone number" ? "연락처" : null;
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // 여기에 회원가입을 처리하는 로직을 추가하세요
-        console.log(formData); // 예시로 console에 양식 데이터를 출력합니다.
+        try {
+            // 여기에 회원가입을 처리하는 로직을 추가하세요
+            // 예시로 axios를 사용하여 POST 요청을 보냅니다.
+            console.log(formData)
+            const response = await axios.post('127.0.0.1:8080', formData);
+
+            // 가입이 성공하면 모달 열기 등을 처리할 수 있습니다.
+            setIsModalOpen(true);
+            console.log(response.data); // 응답 데이터를 확인합니다.
+        } catch (error) {
+            // 오류가 발생한 경우 에러 핸들링을 할 수 있습니다.
+            console.error('Error:', error);
+        }
     };
 
     const handleCheckboxChange = (e) => {
         setIsChecked(e.target.checked);
+    };
+
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false); // 모달 닫기
     };
 
     return (
@@ -85,8 +112,10 @@ const Signup = () => {
                         </div>
                     </div>
                     <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <div style={{grid: 1, border: "1px solid #bbbbbb", borderRight: 'none', height: "50px"} }>
-                            <img className={styles.emailIcon} style={{ width: "100%", height: "100%", objectFit: "cover" }} src={process.env.PUBLIC_URL + '/img/password-icon.png'}/>
+                        <div style={{grid: 1, border: "1px solid #bbbbbb", borderRight: 'none', height: "50px"}}>
+                            <img className={styles.emailIcon}
+                                 style={{width: "100%", height: "100%", objectFit: "cover"}}
+                                 src={process.env.PUBLIC_URL + '/img/password-icon.png'}/>
                         </div>
                         <div style={{grid: 1}}>
                             <input className={styles.signUpInputBox}
@@ -104,7 +133,8 @@ const Signup = () => {
                     </div>
                     <div style={{display: 'flex', justifyContent: 'center'}}>
                         <div style={{grid: 1, border: "1px solid #bbbbbb", borderRight: 'none', height: "50px"}}>
-                            <img className={styles.emailIcon} src={process.env.PUBLIC_URL + '/img/password-confirm.png'}/>
+                            <img className={styles.emailIcon}
+                                 src={process.env.PUBLIC_URL + '/img/password-confirm.png'}/>
                         </div>
                         <div style={{grid: 1}}>
                             <input className={styles.signUpInputBox}
@@ -125,7 +155,7 @@ const Signup = () => {
                         </div>
                         <div style={{grid: 1}}>
                             <input className={styles.signUpInputBox}
-                                   type="address"
+                                   type="text"
                                    id="address"
                                    name="address"
                                    value={formData.address}
@@ -142,10 +172,10 @@ const Signup = () => {
                         </div>
                         <div style={{grid: 1}}>
                             <input className={styles.signUpInputBox}
-                                   type="phone number"
-                                   id="phone number"
+                                   type="text"
+                                   id="phone-number"
                                    name="phone number"
-                                   value={formData.address}
+                                   value={formData['phone number']}
                                    onChange={handleChange}
                                    onFocus={handleFocus}
                                    onBlur={handleBlur}
@@ -153,12 +183,12 @@ const Signup = () => {
                             />
                         </div>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <div style={{ grid: 1, border: '1px solid #bbbbbb', borderRight: 'none', height: '50px' }}>
-                            <img className={styles.emailIcon} src={process.env.PUBLIC_URL + '/img/MF-icon.png'} />
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <div style={{grid: 1, border: '1px solid #bbbbbb', borderRight: 'none', height: '50px'}}>
+                            <img className={styles.emailIcon} src={process.env.PUBLIC_URL + '/img/MF-icon.png'}/>
                         </div>
-                        <div style={{ grid: 1, placeItems: 'center', width: '500px', border: '1px solid #bbbbbb'}}>
-                            <label style={{ marginTop: '11px', marginRight: '20px', marginLeft: '20px' }}>
+                        <div style={{grid: 1, placeItems: 'center', width: '500px', border: '1px solid #bbbbbb'}}>
+                            <label style={{marginTop: '11px', marginRight: '20px', marginLeft: '20px'}}>
                                 <input
                                     type="radio"
                                     name="gender"
@@ -182,26 +212,42 @@ const Signup = () => {
                             </label>
                         </div>
                     </div>
-                    <CheckBoxExample handleCheckboxChange={handleCheckboxChange} />
-                    <button className={`${styles.signUpSubmitButton} ${isButtonEnabled ? styles.activeButton : styles.disabledButton}`} type="submit" disabled={!isButtonEnabled}>가입하기</button>
+                    <CheckBoxExample handleCheckboxChange={handleCheckboxChange}/>
+                    <button
+                        className={`${styles.signUpSubmitButton} ${isButtonEnabled ? styles.activeButton : styles.disabledButton}`}
+                        type="submit" disabled={!isButtonEnabled} onClick={handleSubmit}>가입하기
+                    </button>
+                    {isModalOpen && (
+                        <div className={styles.modalBackdrop}>
+                            <div className={styles.modal}>
+                <span className={styles.close} onClick={handleCloseModal}>
+                  &times;
+                </span>
+                                <div className={styles.modalContent}>
+                                    <p>모달 내용</p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </form>
             </div>
         </div>
     );
 };
-const CheckBoxExample = ({ handleCheckboxChange }) => {
+const CheckBoxExample = ({handleCheckboxChange}) => {
     return (
-        <div style={{marginTop:"20px"}}>
+        <div style={{marginTop: "20px"}}>
             <label>
                 <input
                     type="checkbox"
                     onChange={handleCheckboxChange}
-                    style={{ marginRight: "2px" }}
+                    style={{marginRight: "2px"}}
                 />
                 모두 확인하였으며, 약관에 동의합니다.
             </label>
         </div>
     );
 };
+
 
 export default Signup;

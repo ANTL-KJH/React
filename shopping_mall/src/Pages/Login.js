@@ -64,7 +64,7 @@ const Login = () => {
                     </div>
                     <div style={{display: 'flex', justifyContent: 'center'}}>
                         <div style={{grid: 1, border: "1px solid #bbbbbb", borderRight: 'none', height: "50px"} }>
-                            <img className={styles.emailIcon} style={{ width: "100%", height: "100%", objectFit: "cover" }} src={process.env.PUBLIC_URL + '/img/password-icon.png'}/>
+                            <img className={styles.emailIcon} src={process.env.PUBLIC_URL + '/img/password-icon.png'}/>
                         </div>
                         <div style={{grid: 1}}>
                             <input className={styles.signUpInputBox}

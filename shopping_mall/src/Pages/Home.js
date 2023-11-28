@@ -13,7 +13,7 @@ function ProductCard() {
             {productData.map((product, i) => (
                 <div className={styles.customCol} key={i}>
                     <a href={`/product/${product.id}`} onClick={() => handleImageClick(product)}>
-                        <img src={process.env.PUBLIC_URL + product.imagePath} alt={product.title} />
+                        <img className={styles.customColImg} src={process.env.PUBLIC_URL + product.imagePath} alt={product.title} />
                     </a>
                     <h4>{product.title}</h4>
                     <p>{product.price}원</p>

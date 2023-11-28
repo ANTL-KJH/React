@@ -5,12 +5,24 @@
     flex-wrap: wrap;
 }
 
-.customCol {
-    width: calc(100% / 3); /* 3열의 경우, 각 컬럼은 총 가로 길이의 1/3을 차지하도록 설정 */
-    box-sizing: border-box;
-    padding: 0 10px; /* 컬럼 사이의 간격을 위한 패딩 */
+@media (max-width: 799px) {
+    .customCol {
+        margin-left: 10%;
+        margin-rightt: 10%;
+        width: 80%; /* 화면 폭이 작아질 때 한 열로 변경 */
+    }
 }
 
-.customCol img {
-    width: 80%;
+@media (min-width: 800px) {
+    .customCol {
+        width: calc(100% / 3); /* 화면 폭이 커질 때 3열로 표시 */
+    }
+}
+
+.customColImg {
+    width: 90%;
+    height: auto;
+    max-height: 300px; /* 이미지의 최대 높이를 조정 */
+    object-fit: contain; /* 이미지 비율 유지 */
+    margin-bottom: 10px; /* 이미지 간 간격 설정 */
 }

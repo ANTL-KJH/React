@@ -46,3 +46,37 @@
     border-color: #ccc; /* 회색 테두리를 적용합니다. */
     cursor: not-allowed; /* 클릭이 불가능한 상태임을 보여주기 위해 커서를 바꿉니다. */
 }
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1); /* 투명한 검은 배경 */
+    z-index: 999; /* 모달 위에 표시하기 위해 z-index 설정 */
+}
+
+.modal {
+    position: fixed;
+    background-color: #ffffff;
+    width: 500px;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* 그 외 스타일 */
+}
+
+.close {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333; /* 닫기 버튼의 색상 */
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #666; /* 마우스를 올렸을 때 색상 변화 */
+}

@@ -11,11 +11,11 @@ function Product(props){
     const productData = useSelector((state) => state.productData);
     return(
         <div className="container">
-            <div className="row">
-                <div className="col-md-6">
+            <div className={styles.customRow}>
+                <div className={styles.customColImage}>
                     <img src={process.env.PUBLIC_URL + productData[idx].imagePath} width="80%" />
                 </div>
-                <div className="col-md-6 mt-4">
+                <div className={styles.customColContent}>
                     <h4 className="pt-5">{productData[idx].title}</h4>
                     <p>{productData[idx].content}</p>
                     <p>{productData[idx].price}원</p>
