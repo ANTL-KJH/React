@@ -50,12 +50,22 @@
 .navbar {
   width: 100%;
   background-color: #F6F6F6;
-  padding: 15px 0px;
+  padding: 10px 0px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.2); /* 여기에 그림자 효과 추가 */
+}
+.navbarRow{
+  width: 100%;
+  margin-top:5px;
+  margin-bottom: 10px;
+  background-color: #F6F6F6;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 .navImg {
   width: 100px;
   margin-left: 15%;
@@ -71,16 +81,24 @@
 .navbarMenuRight {
   color: #333333;
   font-size: 22px;
+  font-weight: bold;
   text-decoration: none;
   margin-left: 20px;
 }
+.navbarMenuRight:first-child {
+  color: black; /* 로그인 링크 색상 */
+}
 
+.navbarMenuRight:last-child {
+  color: #5555ff; /* 회원가입 링크 색상 */
+}
 .navbarMenuGroup {
   width: 100px;
   margin-left: 35px;
   display: flex;
   align-items: center;
   margin-right: auto;
+  font-weight: bold;
 }
 
 .navbarMenuRightGroup {
@@ -91,10 +109,60 @@
   margin-left: auto;
 }
 
+@media (min-width: 1000px) {
+  .navMenuIcon {
+    display: none;
+  }
 
-{/*.main-bg {
-  height:300px;
-  background-image:url('./img/YU Shop.png');
-  background-size: cover;
-  background-position:center;
-}*/}
+  .navbarMenuGroup.show,
+  .navbarMenuRightGroup.show {
+    display: flex;
+  }
+}
+
+@media (max-width: 999px) {
+  .navMenuIcon {
+    display: block;
+    margin-right: 15%;
+    border: none; /* 이 부분을 추가해 테두리를 없앨 수 있어요 */
+    background: none; /* 배경을 없애서 버튼이 더 깔끔하게 보이게 할 수도 있어요 */
+  }
+
+  .navbarMenuGroup,
+  .navbarMenuRightGroup {
+    display: none;
+  }
+}
+
+
+.hiddenNavbar {
+  display: grid;
+  width: 100%;
+  background-color: #F8F8F8;
+  margin-top: 10px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.hiddenNavbarRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.hiddenNavbarMenu {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+  color: #333333;
+  text-decoration: none;
+  border-bottom: 1px solid #8888ff;
+}
+
+
+
+.burgerIcon{
+  max-width: 25px;
+}

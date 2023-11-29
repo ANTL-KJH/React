@@ -8,6 +8,9 @@ const Signup = () => {
         email: '',
         password: '',
         confirmPassword: '',
+        address:'',
+        phoneNumber:'',
+        gender:''
     });
 
     const [isChecked, setIsChecked] = useState(false);
@@ -22,7 +25,7 @@ const Signup = () => {
             formData.password !== '' &&
             formData.confirmPassword !== '' &&
             formData.address !== '' &&
-            formData['phone number'] !== '' &&
+            formData.phoneNumber !== '' &&
             formData.gender !== '';
 
         // 모든 입력값이 채워졌으면 버튼 활성화
@@ -67,7 +70,9 @@ const Signup = () => {
     const handleCloseModal = () => {
         setIsModalOpen(false); // 모달 닫기
     };
-
+    const isPasswordMatch = () => {
+        return formData.password === formData.confirmPassword;
+    };
     return (
         <div className="signup-container">
             <div className="signupCard">
@@ -149,6 +154,12 @@ const Signup = () => {
                             />
                         </div>
                     </div>
+                    {formData.password && formData.confirmPassword && !isPasswordMatch() && (
+                        <span style={{ color: 'red' }}>비밀번호가 일치하지 않습니다.</span>
+                    )}
+                    {formData.password && formData.confirmPassword && isPasswordMatch() && (
+                        <span style={{ color: 'green' }}>비밀번호가 일치합니다.</span>
+                    )}
                     <div style={{display: 'flex', justifyContent: 'center'}}>
                         <div style={{grid: 1, border: "1px solid #bbbbbb", borderRight: 'none', height: "50px"}}>
                             <img className={styles.emailIcon} src={process.env.PUBLIC_URL + '/img/address-icon.png'}/>
@@ -173,9 +184,9 @@ const Signup = () => {
                         <div style={{grid: 1}}>
                             <input className={styles.signUpInputBox}
                                    type="text"
-                                   id="phone-number"
-                                   name="phone number"
-                                   value={formData['phone number']}
+                                   id="phoneNumber"
+                                   name="phoneNumber"
+                                   value={formData.phoneNumber}
                                    onChange={handleChange}
                                    onFocus={handleFocus}
                                    onBlur={handleBlur}

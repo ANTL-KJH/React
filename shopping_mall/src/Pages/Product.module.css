@@ -61,20 +61,21 @@
 }
 
 .productDetailImage {
-    width: 50%; /* 이미지 너비 100%로 설정 */
+    width: 100%; /* 이미지 너비 100%로 설정 */
     height: auto; /* 높이 자동으로 조정하여 비율 유지 */
 
     margin: 0 auto; /* 이미지를 가로로 가운데 정렬 */
-    max-width: 800px;
+    max-width: 600px;
 
 }
 
-@media (max-width: 768px) {
+@media (max-width: 999px) {
     .customRow {
         flex-direction: column;
     }
     .customColImage,
     .customColContent {
+        max-width: 600px;
         width: 100%;
     }
 }
