@@ -15,7 +15,7 @@ import {changeProductData} from "./store";
 import {useDispatch} from "react-redux";
 function App() {
     let navigate = useNavigate();
-    let dispatch = useDispatch()
+
     return (
         <div className="App">
             <MainNavbar navigate={navigate}></MainNavbar>
@@ -37,12 +37,8 @@ function App() {
                 <Route path="*" element={<div><NotFoundPage />찾을 수 없는 페이지입니다.</div>} />
             </Routes>
 
-            <button onClick={()=>{
-          axios.get('http://localhost:8080/api')
-              .then((response)=>{dispatch(changeProductData(response.data))})
-              .catch(()=>navigate("/error"))
-      }}>상품 로딩</button>
-            <button onClick={()=>{dispatch(changeProductData())}}>change</button>
+
+            {/*<button onClick={()=>{dispatch(changeProductData())}}>change</button>*/}
         </div>
     );
 }
