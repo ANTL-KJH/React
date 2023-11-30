@@ -26,8 +26,8 @@ const Signup = () => {
             formData.confirmPassword !== '' &&
             formData.address !== '' &&
             formData.phoneNumber !== '' &&
-            formData.gender !== '';
-
+            formData.gender !== ''&&
+            formData.password === formData.confirmPassword;
         // 모든 입력값이 채워졌으면 버튼 활성화
         setIsButtonEnabled(isChecked && isFormFilled);
     }, [isChecked, formData]);
@@ -75,14 +75,14 @@ const Signup = () => {
     };
     return (
         <div className="signup-container">
-            <div className="signupCard">
+            <div className={styles.signupCard}>
                 <Link className="navbarMenuLeft" to={'/'}><img className={styles.signUpImg}
                                                                src={process.env.PUBLIC_URL + '/img/A-mall2.png'}/></Link>
 
                 <div className={styles.signUpText}>회원정보를 입력해주세요</div>
-                <form onSubmit={handleSubmit}>
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <div style={{grid: 1, border: "1px solid #bbbbbb", borderRight: 'none', height: "50px"}}>
+
+                    <div className={styles.signUpFormBox}>
+                        <div className={styles.iconBox} >
                             <img className={styles.emailIcon} src={process.env.PUBLIC_URL + '/img/Person.png'}/>
                         </div>
                         <div style={{grid: 1}}>
@@ -99,8 +99,8 @@ const Signup = () => {
                         </div>
 
                     </div>
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <div style={{grid: 1, border: "1px solid #bbbbbb", borderRight: 'none', height: "50px"}}>
+                    <div className={styles.signUpFormBox}>
+                        <div className={styles.iconBox} >
                             <img className={styles.emailIcon} src={process.env.PUBLIC_URL + '/img/Email-icon.png'}/>
                         </div>
                         <div style={{grid: 1}}>
@@ -116,8 +116,8 @@ const Signup = () => {
                             />
                         </div>
                     </div>
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <div style={{grid: 1, border: "1px solid #bbbbbb", borderRight: 'none', height: "50px"}}>
+                    <div className={styles.signUpFormBox}>
+                        <div className={styles.iconBox} >
                             <img className={styles.emailIcon}
                                  style={{width: "100%", height: "100%", objectFit: "cover"}}
                                  src={process.env.PUBLIC_URL + '/img/password-icon.png'}/>
@@ -136,8 +136,8 @@ const Signup = () => {
                         </div>
 
                     </div>
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <div style={{grid: 1, border: "1px solid #bbbbbb", borderRight: 'none', height: "50px"}}>
+                    <div  className={styles.signUpFormBox}>
+                        <div className={styles.iconBox} >
                             <img className={styles.emailIcon}
                                  src={process.env.PUBLIC_URL + '/img/password-confirm.png'}/>
                         </div>
@@ -160,8 +160,8 @@ const Signup = () => {
                     {formData.password && formData.confirmPassword && isPasswordMatch() && (
                         <span style={{ color: 'green' }}>비밀번호가 일치합니다.</span>
                     )}
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <div style={{grid: 1, border: "1px solid #bbbbbb", borderRight: 'none', height: "50px"}}>
+                    <div className={styles.signUpFormBox}>
+                        <div className={styles.iconBox} >
                             <img className={styles.emailIcon} src={process.env.PUBLIC_URL + '/img/address-icon.png'}/>
                         </div>
                         <div style={{grid: 1}}>
@@ -177,8 +177,8 @@ const Signup = () => {
                             />
                         </div>
                     </div>
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <div style={{grid: 1, border: "1px solid #bbbbbb", borderRight: 'none', height: "50px"}}>
+                    <div className={styles.signUpFormBox}>
+                        <div className={styles.iconBox} >
                             <img className={styles.emailIcon} src={process.env.PUBLIC_URL + '/img/phone-icon.png'}/>
                         </div>
                         <div style={{grid: 1}}>
@@ -194,7 +194,7 @@ const Signup = () => {
                             />
                         </div>
                     </div>
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <div className={styles.signUpFormBox}>
                         <div style={{grid: 1, border: '1px solid #bbbbbb', borderRight: 'none', height: '50px'}}>
                             <img className={styles.emailIcon} src={process.env.PUBLIC_URL + '/img/MF-icon.png'}/>
                         </div>
@@ -240,7 +240,6 @@ const Signup = () => {
                             </div>
                         </div>
                     )}
-                </form>
             </div>
         </div>
     );

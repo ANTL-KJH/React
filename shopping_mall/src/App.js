@@ -11,12 +11,11 @@ import Cart from "./Pages/Cart";
 import RegisterPage from "./Pages/SignUp";
 import Login from "./Pages/Login";
 import React, { useRef, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-
+import {changeProductData} from "./store";
+import {useDispatch} from "react-redux";
 function App() {
     let navigate = useNavigate();
-
+    let dispatch = useDispatch()
     return (
         <div className="App">
             <MainNavbar navigate={navigate}></MainNavbar>
@@ -38,12 +37,12 @@ function App() {
                 <Route path="*" element={<div><NotFoundPage />찾을 수 없는 페이지입니다.</div>} />
             </Routes>
 
-            {/*<button onClick={()=>{
-          axios.get('C:\\Users\\ANTL\\Desktop\\GitHub\\React\\shopping_mall\\public\\data.json')
-              .then((applecodingData)=>{console.log(applecodingData.data)})
+            <button onClick={()=>{
+          axios.get('http://localhost:8080/api')
+              .then((response)=>{dispatch(changeProductData(response.data))})
               .catch(()=>navigate("/error"))
-      }}>버튼</button>*/}
-
+      }}>상품 로딩</button>
+            <button onClick={()=>{dispatch(changeProductData())}}>change</button>
         </div>
     );
 }
@@ -53,26 +52,42 @@ function MainNavbar({ navigate }) {
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
-    const [burgerClicked, setburgerClicked] =useState(false)
+    const [burgerClicked, setBurgerClicked] = useState(false);
     const toggleBurgerClicked = () => {
-        setburgerClicked(!burgerClicked);
+        setBurgerClicked(!burgerClicked);
     };
 
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 1000 && showMenu) {
                 setShowMenu(false);
-                setburgerClicked(false);
+                setBurgerClicked(false);
             }
         };
 
         window.addEventListener('resize', handleResize);
 
-        // 초기 로드 시 체크
-
         return () => {
             window.removeEventListener('resize', handleResize);
         };
+    }, [showMenu]);
+
+    useEffect(() => {
+        const hiddenNavbar = document.querySelector('.hiddenNavbar');
+
+        if (hiddenNavbar) {
+            if (showMenu) {
+                hiddenNavbar.classList.remove('hide');
+                // Force reflow to apply transition
+                void hiddenNavbar.offsetWidth;
+                hiddenNavbar.classList.add('show');
+            } else {
+                hiddenNavbar.classList.remove('show');
+                // Force reflow to apply transition
+                void hiddenNavbar.offsetWidth;
+                hiddenNavbar.classList.add('hide');
+            }
+        }
     }, [showMenu]);
     return (
         <div className="navbar">

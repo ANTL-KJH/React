@@ -76,6 +76,7 @@
   font-size: 22px;
   text-decoration: none;
   margin-right: 20px;
+
 }
 
 .navbarMenuRight {
@@ -109,7 +110,7 @@
   margin-left: auto;
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 900px) {
   .navMenuIcon {
     display: none;
   }
@@ -120,10 +121,10 @@
   }
 }
 
-@media (max-width: 999px) {
+@media (max-width: 899px) {
   .navMenuIcon {
     display: block;
-    margin-right: 15%;
+    margin-right: 5%;
     border: none; /* 이 부분을 추가해 테두리를 없앨 수 있어요 */
     background: none; /* 배경을 없애서 버튼이 더 깔끔하게 보이게 할 수도 있어요 */
   }
@@ -136,6 +137,9 @@
 
 
 .hiddenNavbar {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  visibility: visible;
   display: grid;
   width: 100%;
   background-color: #F8F8F8;
@@ -143,6 +147,14 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.hiddenNavbar.show {
+  opacity: 1;
+}
+
+.hiddenNavbar.hide {
+  opacity: 0;
 }
 
 .hiddenNavbarRow {
@@ -160,7 +172,6 @@
   text-decoration: none;
   border-bottom: 1px solid #8888ff;
 }
-
 
 
 .burgerIcon{

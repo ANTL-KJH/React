@@ -1,0 +1,12 @@
+.customCartRow{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.cartProductImage{
+    max-height: 200px;
+    max-width: 200px;
+    border:1px solid #cccccc;
+}
+.customCartRowHead{
+    display: flex;
+}
