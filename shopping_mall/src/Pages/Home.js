@@ -9,7 +9,7 @@ function ProductCard() {
     let productData = useSelector((state) => state.productData);
     let dispatch = useDispatch()
     useEffect(() => {
-        axios.post('http://localhost:8080/api')
+        axios.post('http://localhost:8080/api/Product')
             .then((response) => {
                 dispatch(changeProductData(response.data));
             })
