@@ -11,7 +11,7 @@ function ProductCard() {
     useEffect(() => {
         axios.post('http://localhost:8080/api/Product')
             .then((response) => {
-                dispatch(changeProductData(response.data));
+                dispatch(changeProductData(response.data));console.log(response.data)
             })
             .catch(() => navigate("/error"));
     }, [dispatch, navigate]);
@@ -23,10 +23,10 @@ function ProductCard() {
         <div className={styles.customMainRow}>
             {productData.map((product, i) => (
                 <div className={styles.customCol} key={i}>
-                    <a href={`/product/${product.id}`} onClick={() => handleImageClick(product)}>
-                        <img className={styles.customColImg} src={process.env.PUBLIC_URL + product.imagePath} alt={product.title} />
+                    <a href={`/product/${product.productid}`} onClick={() => handleImageClick(product)}>
+                        <img className={styles.customColImg} src={process.env.PUBLIC_URL + product.imgpath} alt={product.title} />
                     </a>
-                    <h4>{product.title}</h4>
+                    <h4>{product.name}</h4>
                     <p>{product.price}원</p>
                 </div>
             ))}
