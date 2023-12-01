@@ -38,12 +38,33 @@ let cartData = createSlice({
             price : 0, imagePath: '/img/ticket.jpg'
         }
     ]
-
 })
+
+let productDetail = createSlice({
+    name: 'productDetail',
+    initialState: {}, // 빈 객체로 초기화
+    reducers: {
+        changeProductDetail(state, action) {
+            return action.payload; // API에서 받아온 데이터로 스토어 업데이트
+        },
+    },
+})
+export  let { changeProductDetail } = productDetail.actions
+
+let serverAddr = createSlice({
+    name:'serverAddr',
+    initialState:
+        {
+            serverAddress:'https://3ab9-165-229-50-48.ngrok-free.app'
+        }
+})
+
 export default configureStore({
     reducer: {
         userData : userData.reducer,
         productData:productData.reducer,
-        cartData:cartData.reducer
+        cartData:cartData.reducer,
+        productDetail:productDetail.reducer,
+        serverAddr:serverAddr.reducer
     }
 })

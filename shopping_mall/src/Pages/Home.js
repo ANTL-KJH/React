@@ -1,34 +1,51 @@
 import styles from './Home.module.css';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import {changeProductData} from "../store";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 function ProductCard() {
     let navigate = useNavigate();
     let productData = useSelector((state) => state.productData);
+    let serverAddr = useSelector((state) => state.serverAddr.serverAddress);
     let dispatch = useDispatch()
+    const cancelRequest = useRef(null);
+    const handleImageClick = (productId) => {
+        navigate(`/product/${productId}`);
+    };
     useEffect(() => {
-        axios.post('http://localhost:8080/api/Product')
+        cancelRequest.current = axios.CancelToken.source();
+        axios.post(`${serverAddr}/api/Product`)
             .then((response) => {
                 dispatch(changeProductData(response.data));console.log(response.data)
             })
-            .catch(() => navigate("/error"));
+            .catch((error) => {
+                if (!axios.isCancel(error)) {
+                    navigate("/error");
+                }
+            });
+        return () => {
+            // 컴포넌트가 언마운트될 때 요청 취소
+            if (cancelRequest.current) {
+                cancelRequest.current.cancel("Component unmounted");
+            }
+        };
     }, [dispatch, navigate]);
-    const handleImageClick = (product) => {
-        // 특정 주소로 이동하는 로직 구현
-        navigate(`/product/${product.id}`); // 예시로 product의 id를 사용하여 이동하도록 설정
-    };
+
     return (
         <div className={styles.customMainRow}>
             {productData.map((product, i) => (
                 <div className={styles.customCol} key={i}>
-                    <a href={`/product/${product.productid}`} onClick={() => handleImageClick(product)}>
-                        <img className={styles.customColImg} src={process.env.PUBLIC_URL + product.imgpath} alt={product.title} />
-                    </a>
-                    <h4>{product.name}</h4>
-                    <p>{product.price}원</p>
-                </div>
+                    <Link to={`/product/${product.productid}`}>
+                        <img className={styles.customColImg} src={process.env.PUBLIC_URL + product.imgpath} alt="logo" />
+                    </Link>
+                    <div className={styles.customColProductText}>
+                        <div className={styles.customColProductTitle}>{product.name}</div>
+                        <div className={styles.customColProductPrice}>{product.price}원</div>
+                        <div className={styles.customColProductRemainAmount}>남은수량:{product.amount - product.TotalSales}</div>
+
+                    </div>
+                    </div>
             ))}
 
         </div>

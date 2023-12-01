@@ -10,6 +10,7 @@ import ErrorPage from "./Pages/Error";
 import Cart from "./Pages/Cart";
 import RegisterPage from "./Pages/SignUp";
 import Login from "./Pages/Login";
+import Checkout from "./Pages/Checkout"
 import React, { useRef, useEffect } from 'react';
 import {changeProductData} from "./store";
 import {useDispatch} from "react-redux";
@@ -34,7 +35,9 @@ function App() {
                 <Route path="/error" element={<div><ErrorPage></ErrorPage></div>}></Route>
                 <Route path="/login" element={<Login />} ></Route>
                 <Route path="/signup" element={<RegisterPage />}></Route>
+                <Route path="/checkout" element={<Checkout/>}></Route>
                 <Route path="*" element={<div><NotFoundPage />찾을 수 없는 페이지입니다.</div>} />
+
             </Routes>
 
 
@@ -55,7 +58,7 @@ function MainNavbar({ navigate }) {
 
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth >= 1000 && showMenu) {
+            if (window.innerWidth >= 900 && showMenu) {
                 setShowMenu(false);
                 setBurgerClicked(false);
             }
