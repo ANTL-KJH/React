@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import styles from "./SignUp.module.css"
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
+import {useSelector} from "react-redux";
 const Signup = () => {
+    let serverAddr = useSelector((state) => state.serverAddr.serverAddress);
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -16,7 +18,8 @@ const Signup = () => {
     const [isChecked, setIsChecked] = useState(false);
     const [isButtonEnabled, setIsButtonEnabled] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const navigate = useNavigate();
+    const loginState = useSelector((state) => state.loginState.loginState); // loginState 가져오기
     useEffect(() => {
         // 모든 입력값이 채워졌는지 확인
         const isFormFilled =
@@ -28,9 +31,12 @@ const Signup = () => {
             formData.phoneNumber !== '' &&
             formData.gender !== ''&&
             formData.password === formData.confirmPassword;
+        if (loginState) {
+            navigate('/'); // 현재 로그인 상태이면 '/' 페이지로 이동
+        }
         // 모든 입력값이 채워졌으면 버튼 활성화
         setIsButtonEnabled(isChecked && isFormFilled);
-    }, [isChecked, formData]);
+    }, [isChecked, formData,loginState, navigate]);
     const handleChange = (e) => {
         const {name, value} = e.target;
         setFormData({...formData, [name]: value});
@@ -51,7 +57,7 @@ const Signup = () => {
             // 여기에 회원가입을 처리하는 로직을 추가하세요
             // 예시로 axios를 사용하여 POST 요청을 보냅니다.
             console.log(formData)
-            const response = await axios.post('127.0.0.1:8080', formData);
+            const response = await axios.post(`${serverAddr}/api/Join`, formData);
 
             // 가입이 성공하면 모달 열기 등을 처리할 수 있습니다.
             setIsModalOpen(true);

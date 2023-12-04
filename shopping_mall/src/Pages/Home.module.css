@@ -1,11 +1,3 @@
-.customMainRow {
-    padding-left: 15%;
-    padding-right: 15%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
 @media (max-width: 899px) {
     .customCol {
         margin-left: 10%;
@@ -16,37 +8,53 @@
 
 @media (min-width: 900px) {
     .customCol {
-        width: calc(100% / 3); /* 화면 폭이 커질 때 3열로 표시 */
+        width: calc(100% / 5); /* 화면 폭이 커질 때 3열로 표시 */
     }
 }
 
+.customMainRow {
+    margin-top:3vh;
+    padding-left: 10%;
+    padding-right: 10%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
 .customCol {
-    display: grid;
-    margin-bottom: 20px; /* 공간을 주기 위해 아래쪽 여백 추가 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    justify-content: space-between; /* 요소들을 상단과 하단에 배치 */
 }
 
 .customColImg {
     width: 90%;
-    height: 90%;
-    max-height: 300px;
+    height: 30vh; /* customMainRow의 70%로 높이 조정 */
+
     object-fit: contain;
-
 }
-.customColProductText{
 
+.customColProductText {
+    margin-top: auto;
 }
+
 .customColProductTitle {
-    font-size: 24px;
+
+    font-size: 18px;
     font-weight: bold;
+    text-decoration: none;
+    color: inherit;
+    font-family: "KBO_Dia_Gothic_bold", serif;
 }
 
 .customColProductPrice {
-    font-size: 18px;
-    margin-top: auto; /* 제품 가격을 부모 요소의 아래쪽으로 이동시킵니다. */
+    font-size: 16px;
 }
 
 .customColProductRemainAmount {
-    font-size: 14px;
+    font-size: 12px;
     color: red;
-    margin-top: auto; /* 남은 수량을 부모 요소의 아래쪽으로 이동시킵니다. */
 }

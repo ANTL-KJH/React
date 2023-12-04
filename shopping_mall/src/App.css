@@ -1,3 +1,18 @@
+@font-face {
+  font-family: "KBO_Dia_Gothic_bold";
+  font-weight: 50;
+  src: url("./fonts/KBO Dia Gothic_bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "LINESpeedKR_Regular";
+  font-weight: 50;
+  src: url("./fonts/LINESeedKR-Rg.ttf") format("truetype");
+}
+@font-face {
+  font-family: "NanumSquareNeo_Lite";
+  font-weight: 50;
+  src: url("./fonts/NanumSquareNeo-aLt.ttf") format("truetype");
+}
 .App {
   text-align: center;
 }
@@ -103,7 +118,7 @@
 }
 
 .navbarMenuRightGroup {
-  width: 200px;
+
   margin-right: 15%;
   display: flex;
   align-items: center;
@@ -176,4 +191,18 @@
 
 .burgerIcon{
   max-width: 25px;
+}
+@media (max-width:1100px){
+  .navbarLoginID{
+    display: none;
+  }
+}
+.navbarLoginID {
+  font-size: 14px;
+  margin-left: auto; /* 왼쪽 마진을 자동으로 설정하여 오른쪽 정렬 */
+}
+.navbarLogout{
+  font-size: 12px;
+  margin-left: 10px;
+  border:2px solid #aaaaaa;
 }

@@ -11,9 +11,11 @@ import Cart from "./Pages/Cart";
 import RegisterPage from "./Pages/SignUp";
 import Login from "./Pages/Login";
 import Checkout from "./Pages/Checkout"
+import CheckoutSuccess from "./Pages/CheckoutSuccess";
 import React, { useRef, useEffect } from 'react';
 import {changeProductData} from "./store";
-import {useDispatch} from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
+import login from "./Pages/Login";
 function App() {
     let navigate = useNavigate();
 
@@ -36,6 +38,7 @@ function App() {
                 <Route path="/login" element={<Login />} ></Route>
                 <Route path="/signup" element={<RegisterPage />}></Route>
                 <Route path="/checkout" element={<Checkout/>}></Route>
+                <Route path="/checkoutsuccess" element={<CheckoutSuccess/>}></Route>
                 <Route path="*" element={<div><NotFoundPage />찾을 수 없는 페이지입니다.</div>} />
 
             </Routes>
@@ -47,6 +50,12 @@ function App() {
 }
 
 function MainNavbar({ navigate }) {
+    {/*const loginState = useSelector((state) => state.loginState.loginState); // loginState 가져오기*/}
+    const loginState = localStorage.getItem("loginState");
+    {/*const userData = useSelector((state)=>state.userData);*/}
+    const userEmail = localStorage.getItem('userEmail');
+    {/*console.log('Login State:', loginState); // 콘솔에 loginState 출력*/}
+    {/*console.log('userData:', userData);*/}
     const [showMenu, setShowMenu] = useState(false);
     const toggleMenu = () => {
         setShowMenu(!showMenu);
@@ -110,8 +119,10 @@ function MainNavbar({ navigate }) {
                 </div>
 
                 <div className="navbarMenuRightGroup">
-                    <Link className="navbarMenuRight" to={'/login'}>로그인</Link>
-                    <Link className="navbarMenuRight" to={'/signup'}>회원가입</Link>
+                    {loginState ? null : <Link className="navbarMenuRight" to={'/login'}>로그인</Link>}
+                    {loginState ? null : <Link className="navbarMenuRight" to={'/signup'}>회원가입</Link>}
+                    {loginState ? <div className="navbarLoginID">{userEmail}님</div>:null}
+                    {loginState ? <Link to={'/'}><button onClick={()=>{localStorage.clear()}} className="navbarLogout">로그아웃</button></Link>:null}
                 </div>
 
 
@@ -122,8 +133,10 @@ function MainNavbar({ navigate }) {
                     <Link className="hiddenNavbarMenu" to={'/cart'}>Cart</Link>
                     <Link className="hiddenNavbarMenu" to={'/event'}>Event</Link>
                     <Link className="hiddenNavbarMenu" to={'/about'}>About</Link>
-                    <Link className="hiddenNavbarMenu" to={'/login'}>로그인</Link>
-                    <Link className="hiddenNavbarMenu" to={'/signup'}>회원가입</Link>
+                    {loginState ? <Link onClick={()=>localStorage.clear()} className="hiddenNavbarMenu" to={'/'}>로그아웃</Link>:null}
+                    {loginState ? null : <Link className="hiddenNavbarMenu" to={'/login'}>로그인</Link>}
+                    {loginState ? null : <Link className="hiddenNavbarMenu" to={'/signup'}>회원가입</Link>}
+
                 </div>
             </div>:null}
         </div>
