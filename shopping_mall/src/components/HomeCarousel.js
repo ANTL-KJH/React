@@ -14,7 +14,7 @@ function ControlledCarousel() {
         <Carousel activeIndex={index} onSelect={handleSelect} className={styles.customCarousel}>
             <Carousel.Item>
                 {/*<ExampleCarouselImage text="First slide" />*/}
-                <Link  to={'/product/9'}><img src={process.env.PUBLIC_URL + '/img/Panda_Ramen.png'}/></Link>
+                <Link  to={'/product/9'}><img className={styles.customCarouselImg} src={process.env.PUBLIC_URL + '/img/Panda_Ramen.png'}/></Link>
 
                 <Carousel.Caption>
 
@@ -22,7 +22,7 @@ function ControlledCarousel() {
             </Carousel.Item>
 
             <Carousel.Item>
-                <Link to={'/product/7'}> <img src={process.env.PUBLIC_URL + '/img/SamsungBrandWeek.png'}/></Link>
+                <Link to={'/product/7'}> <img className={styles.customCarouselImg} src={process.env.PUBLIC_URL + '/img/SamsungBrandWeek.png'}/></Link>
                 {/*<ExampleCarouselImage text="First slide" />*/}
                 <Carousel.Caption>
 
@@ -30,7 +30,7 @@ function ControlledCarousel() {
             </Carousel.Item>
 
             <Carousel.Item>
-                <Link to={'/product/8'}><img src={process.env.PUBLIC_URL + '/img/Hanpa43.png'}/></Link>
+                <Link to={'/product/8'}><img className={styles.customCarouselImg} src={process.env.PUBLIC_URL + '/img/Hanpa43.png'}/></Link>
                 {/*<ExampleCarouselImage text="First slide" />*/}
                 <Carousel.Caption>
 

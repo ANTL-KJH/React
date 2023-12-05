@@ -66,39 +66,76 @@
 .modal {
     position: fixed;
     background-color: #ffffff;
-    width: 500px;
-    height: 500px;
+    width: 400px;
+    height: 400px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     /* 그 외 스타일 */
 }
 
-.close {
+.closeButton {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    font-size: 24px;
-    font-weight: bold;
+    top: 5px;
+    right: 5px;
+    font-size: 20px;
     color: #333; /* 닫기 버튼의 색상 */
     cursor: pointer;
 }
-
-.close:hover {
-    color: #666; /* 마우스를 올렸을 때 색상 변화 */
+.modalContent{
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5vh;
 }
-
-.signupCard {
-    display: grid;
-    grid-gap: 0px; /* 간격 크기 조정 */
-    /* 나머지 스타일 */
-    justify-content: center; /* 수평 가운데 정렬 */
-    align-items: center; /* 수직 가운데 정렬 */
+.welcomeImg{
+    width: 100%;
+    margin-bottom: 5vh;
 }
-
+.modalImg{
+    width: 50%;
+    margin-bottom: 5vh;
+}
+.modalText0{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+.modalText1{
+    text-align: center;
+    font-size: 28px;
+    font-family: KBO_Dia_Gothic_bold, serif;
+}
+.modalText2{
+    margin-top: 1px;
+    margin-left: 2%;
+    text-align: center;
+    font-size: 28px;
+    font-family: LINESpeedKR_Regular, serif;
+}
+.modalText3{
+    text-align: center;
+    font-size: 24px;
+    font-family: LINESpeedKR_Regular, serif;
+}
+.madeBy{
+    font-size: 12px;
+    font-family: NanumSquareNeo_Lite, serif;
+    margin-top: auto;
+}
 .signUpFormBox{
     display: flex;
     justify-content: center;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+.errormodal{
+    position: fixed;
+    background-color: #ffffff;
+    width: 300px;
+    height: 250px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* 그 외 스타일 */
 }

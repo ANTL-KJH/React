@@ -3,7 +3,7 @@ import styles from "./Login.module.css"
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux';
-import { changeUserData,changeLoginState } from '../store';
+
 
 function Login(){
 
@@ -38,9 +38,7 @@ function Login(){
                 localStorage.clear()
                 localStorage.setItem('loginState', true);
                 localStorage.setItem('userEmail', formData.email);
-                // 로그인 성공 시, Redux store에 사용자 이메일 저장
-                dispatch(changeUserData({'email':formData.email}));
-                dispatch(changeLoginState(response.data)); // 이 부분이 loginState를 true로 변경
+
                 navigate('/'); // 로그인 성공 후 이동할 페이지
             } else {
                 // 로그인 실패 시, 처리 로직 추가
@@ -92,15 +90,15 @@ function Login(){
                         </div>
 
                     </div>
+                    <div className={styles.buttonContainer}>
+                        <button type="submit" onClick={handleSubmit} className={styles.loginButton}>로그인</button>
 
+                        <Link className={styles.signUpButton} to={'/signup'}>
+                            <button className={styles.signUpButton}>회원가입</button>
+                        </Link>
+                    </div>
                 </form>
-                <div className={styles.buttonContainer}>
-                    <button onClick={handleSubmit} className={styles.loginButton}>로그인</button>
 
-                    <Link className={styles.signUpButton} to={'/signup'}>
-                        <button className={styles.signUpButton}>회원가입</button>
-                    </Link>
-                </div>
             </div>
         </div>
     );

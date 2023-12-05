@@ -4,8 +4,6 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import ProductCard from "./Pages/Home";
 import Product from "./Pages/Product";
 import NotFoundPage from "./Pages/NotFoundPage";
-import axios from "axios";
-import Error from "./Pages/Error";
 import ErrorPage from "./Pages/Error";
 import Cart from "./Pages/Cart";
 import RegisterPage from "./Pages/SignUp";
@@ -13,9 +11,7 @@ import Login from "./Pages/Login";
 import Checkout from "./Pages/Checkout"
 import CheckoutSuccess from "./Pages/CheckoutSuccess";
 import React, { useRef, useEffect } from 'react';
-import {changeProductData} from "./store";
-import { useDispatch, useSelector } from 'react-redux';
-import login from "./Pages/Login";
+
 function App() {
     let navigate = useNavigate();
 

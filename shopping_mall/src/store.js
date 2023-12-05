@@ -1,16 +1,7 @@
 // for redux
 
 import {configureStore, createSlice} from '@reduxjs/toolkit'
-let loginState=createSlice({
-    name:'loginState',
-    initialState:{loginState:false},
-    reducers:{
-        changeLoginState(state, action) {
-            state.loginState = action.payload;
-        }
-    }
-})
-export let {changeLoginState} = loginState.actions
+
 let userData = createSlice({
     name: 'userData',
     initialState: {},
@@ -63,7 +54,7 @@ let serverAddr = createSlice({
     name: 'serverAddr',
     initialState:
         {
-            serverAddress: 'https://5d72-165-229-50-48.ngrok-free.app'
+            serverAddress: 'https://cf92-165-229-229-217.ngrok-free.app'
         }
 })
 
@@ -73,7 +64,6 @@ export default configureStore({
         productData: productData.reducer,
         cartData: cartData.reducer,
         productDetail: productDetail.reducer,
-        serverAddr: serverAddr.reducer,
-        loginState:loginState.reducer
+        serverAddr: serverAddr.reducer
     }
 })

@@ -1,38 +1,31 @@
 import styles from './CheckoutSuccess.module.css';
 import React, {useEffect, useState} from "react";
-import axios from "axios";
-import {changeProductDetail} from "../store";
 import {useDispatch, useSelector} from "react-redux";
 import Loading from "../components/Loading";
 import {Link, useNavigate} from 'react-router-dom';
 
 function CheckoutSuccess() {
-    let checkoutItemData = localStorage.getItem('checkoutData');
+    let checkoutItemData = JSON.parse(localStorage.getItem('checkoutData'));
+    let receiverData = JSON.parse(localStorage.getItem('pruchaseInfo'));
     let serverAddr = useSelector((state) => state.serverAddr.serverAddress);
     const [loading, setLoading] = useState(true); // 로딩 상태를 추가합니다.
     let navigate = useNavigate();
     let dispatch = useDispatch();
-    const productDetail = useSelector((state) => state.productDetail);
+    const [productDetail, setproductDetail] = useState(JSON.parse(sessionStorage.getItem('purchaseProductData')));
 
-    useEffect(() => {
-        axios
-            .post(`${serverAddr}/api/ProductDetail`, { productid: JSON.parse(checkoutItemData).productId })
-            .then((response) => {
-                console.log(`${serverAddr}/api/ProductDetail`);
-                console.log(response.data);
-                setLoading(false); // 데이터를 받아온 후 로딩 상태 변경
-                dispatch(changeProductDetail(response.data));
-            })
-            .catch((error) => {
-                if (!axios.isCancel(error)) {
-                    navigate('/error');
-                }
-                setLoading(false); // 에러 발생 시에도 로딩 상태 변경
-            });
-    }, []);
-    if (loading) {
-        return <Loading/>; // 로딩 중이면 로딩 컴포넌트를 보여줍니다.
-    }
+    //console.log("ffff", checkoutItemData)
+    //console.log("rrrr",receiverData)
+    const calculateTotalPrice = () => {
+        let totalPrice = 0;
+        productDetail.forEach((item, idx) => {
+            totalPrice += item.price * checkoutItemData[idx].amount;
+        });
+        return totalPrice;
+    };
+
+
+// 총 주문 가격 계산
+    const totalOrderPrice = calculateTotalPrice();
     return (
         <div className={styles.successPage}>
             <div><img className={styles.aMallLogo} src={process.env.PUBLIC_URL + '/img/A-mall2.png'}/></div>
@@ -45,23 +38,30 @@ function CheckoutSuccess() {
             <div className={styles.productData}>
                 <div className={styles.checkoutData}>상품정보</div>
                 <div className={styles.checkoutCustomerDataBox}>
-                    <div className={styles.customCheckoutRow}>
-                        <div className={styles.customCheckoutProductPicture}>
-                            <img className={styles.productImage} src={process.env.PUBLIC_URL + productDetail.imgpath}/>
-                        </div>
-                        <div className={styles.customCheckoutProductName}>
-                            {productDetail.name}
-                        </div>
-                        <div className={styles.customCheckoutProductPrice}>
-                            {productDetail.price}
-                        </div>
-                        <div className={styles.customCheckoutProductAmount}>
-                            {JSON.parse(checkoutItemData).amount}
-                        </div>
-                        <div className={styles.customCheckoutProductTotalPrice}>
-                            {productDetail.price*JSON.parse(checkoutItemData).amount}
-                        </div>
-                    </div>
+                    {
+                        productDetail.map((item, idx) => (
+
+                            <div className={styles.customCheckoutRow} key={idx}>
+                                <div className={styles.customCheckoutProductPicture}>
+                                    <img className={styles.productImage} src={process.env.PUBLIC_URL + item.imgpath}/>
+                                </div>
+                                <div className={styles.customCheckoutProductName}>
+                                    {item.name}
+                                </div>
+                                <div className={styles.customCheckoutProductPrice}>
+                                    {item.price}
+                                </div>
+                                <div className={styles.customCheckoutProductAmount}>
+                                    {checkoutItemData[idx].amount}
+                                </div>
+                                <div className={styles.customCheckoutProductTotalPrice}>
+                                    {item.price * checkoutItemData[idx].amount}
+                                </div>
+                            </div>
+                        ))
+                    }
+
+
                 </div>
             </div>
             <div className={styles.receiver}>
@@ -92,14 +92,25 @@ function CheckoutSuccess() {
                             연락처
                         </div>
                         <div className={styles.customCheckoutReceiverRightLast}>
-                            {JSON.parse(localStorage.getItem('pruchaseInfo')).receiverPhoneNumber}
+                            {JSON.parse(localStorage.getItem('pruchaseInfo')).phoneNumber}
                         </div>
                     </div>
                 </div>
-                <Link to={'/'}><button className={styles.gohomeButton}>홈으로 이동</button></Link>
+
 
             </div>
+            <div className={styles.totalPrice}>
+                <div className={styles.totalPriceText}>
+                    결제금액
+                </div>
 
+                <div className={styles.totalPriceVal}>
+                    {totalOrderPrice} 원
+                </div>
+            </div>
+            <Link to={'/'}>
+                <button className={styles.gohomeButton}>홈으로 이동</button>
+            </Link>
         </div>
 
     );

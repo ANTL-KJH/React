@@ -8,6 +8,7 @@ import {changeProductDetail} from '../store';
 import Loading from "../components/Loading";
 
 function Product(props) {
+    const loginState = localStorage.getItem("loginState");
     let {idx} = useParams();
     let [tab, setTab] = useState(0);
     let serverAddr = useSelector((state) => state.serverAddr.serverAddress);
@@ -30,14 +31,32 @@ function Product(props) {
 
     // 장바구니 버튼 클릭 시 모달을 열기 위한 함수
     const handleCartButtonClick = () => {
-        setShowModal(true);
-        // 모달을 열 때 추가적인 로직이 있다면 여기에 추가할 수 있습니다.
+        if (!loginState) {
+            navigate('/login');
+        } else {
+            setShowModal(true);
+        }
     };
     const handleCloseModal = () => {
         setShowModal(false);
     };
     // 모달을 닫는 함수
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            console.log("SendData", {"user_email": localStorage.getItem('userEmail'),"amount":quantity,"productid":Number(idx)});
+            const response = await axios.post(`${serverAddr}/api/AddCart`,{"user_email": localStorage.getItem('userEmail'),"amount":quantity,"productid":Number(idx)});
 
+            if (response.data === true) {
+
+            } else {
+                // 로그인 실패 시, 처리 로직 추가
+            }
+        } catch (error) {
+            // 오류가 발생한 경우 에러 핸들링을 할 수 있습니다.
+            console.error('Error:', error);
+        }
+    };
     useEffect(() => {
         axios
             .post(`${serverAddr}/api/ProductDetail`, {productid: idx})
@@ -84,7 +103,7 @@ function Product(props) {
 
                         </div>
                     </div>
-                    <button className={styles.addCart} onClick={handleCartButtonClick}>장바구니</button>
+                    <button className={styles.addCart} onClick={(e)=>{handleSubmit(e);handleCartButtonClick()}}>장바구니</button>
                     {showModal && <div className={styles.modalBackdrop} onClick={handleCloseModal}></div>}
 
                     {/* 모달 컴포넌트 */}
@@ -92,8 +111,9 @@ function Product(props) {
                         setShowModal={setShowModal}
                         handleCloseModal={handleCloseModal}
                     />}
-                    <Link to={`/checkout/`} onClick={() => {
-                        localStorage.setItem('checkoutData', JSON.stringify({productId: idx, amount: quantity}))
+
+                    <Link to={loginState?`/checkout/`:`/login`} onClick={() => {
+                        localStorage.setItem('checkoutData', JSON.stringify([{"productID": Number(idx), amount: Number(quantity)}]))
                     }}>
                         <button className={styles.btnPurchase}>주문하기</button>
                     </Link>
@@ -134,7 +154,7 @@ function TabContent({tab, productDetail, idx}) {
 
                         <img
                             className={styles.productDetailImage} src={process.env.PUBLIC_URL + productDetail.imgpath}
-                            width="80%"/>
+                            width="60%"/>
                     </div>,
                     <div className={styles.d2}>리뷰</div>,
                     <div className={styles.d3}>Q&A</div>

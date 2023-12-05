@@ -76,6 +76,7 @@
     justify-content: center;
     text-align: center;
     width: 13%;
+    border-right: 1px solid #8888ff;
     border-bottom: 1px solid #8888ff;
 }
 
@@ -146,6 +147,25 @@
     width:80%;
     border-bottom: 2px solid #8888ff;
     text-align: left;
+}
+.totalPrice{
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+}
+.totalPriceText{
+    font-size: 22px;
+    display: flex;
+    padding-bottom: 0.5%;
+
+}
+.totalPriceVal{
+    font-size: 22px;
+    color: #bb0000;
+    border-top: 2px solid #8888ff;
+    border-bottom: 2px solid #8888ff;
+    background-color: #eeeeff;
+    margin-bottom: 3vh;
 }
 .gohomeButton {
     font-size: 22px;

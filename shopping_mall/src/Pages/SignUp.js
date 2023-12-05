@@ -3,23 +3,26 @@ import styles from "./SignUp.module.css"
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useSelector} from "react-redux";
+
 const Signup = () => {
     let serverAddr = useSelector((state) => state.serverAddr.serverAddress);
+
     const [formData, setFormData] = useState({
         username: '',
         email: '',
         password: '',
         confirmPassword: '',
-        address:'',
-        phoneNumber:'',
-        gender:''
+        address: '',
+        phoneNumber: '',
+        gender: ''
     });
 
     const [isChecked, setIsChecked] = useState(false);
     const [isButtonEnabled, setIsButtonEnabled] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
     const navigate = useNavigate();
-    const loginState = useSelector((state) => state.loginState.loginState); // loginState 가져오기
+    const loginState = localStorage.getItem('loginState'); // loginState 가져오기
     useEffect(() => {
         // 모든 입력값이 채워졌는지 확인
         const isFormFilled =
@@ -29,14 +32,14 @@ const Signup = () => {
             formData.confirmPassword !== '' &&
             formData.address !== '' &&
             formData.phoneNumber !== '' &&
-            formData.gender !== ''&&
+            formData.gender !== '' &&
             formData.password === formData.confirmPassword;
         if (loginState) {
             navigate('/'); // 현재 로그인 상태이면 '/' 페이지로 이동
         }
         // 모든 입력값이 채워졌으면 버튼 활성화
         setIsButtonEnabled(isChecked && isFormFilled);
-    }, [isChecked, formData,loginState, navigate]);
+    }, [isChecked, formData, loginState, navigate]);
     const handleChange = (e) => {
         const {name, value} = e.target;
         setFormData({...formData, [name]: value});
@@ -65,9 +68,15 @@ const Signup = () => {
         } catch (error) {
             // 오류가 발생한 경우 에러 핸들링을 할 수 있습니다.
             console.error('Error:', error);
+            setIsErrorModalOpen(true);
         }
     };
-
+    const handleSubmitForm = (e) => {
+        e.preventDefault(); // 기본 제출 동작 막기
+        if (isButtonEnabled) {
+            handleSubmit(e); // 가입하기 함수 호출
+        }
+    };
     const handleCheckboxChange = (e) => {
         setIsChecked(e.target.checked);
     };
@@ -75,10 +84,17 @@ const Signup = () => {
 
     const handleCloseModal = () => {
         setIsModalOpen(false); // 모달 닫기
+        localStorage.setItem('loginState', true);
+        localStorage.setItem('userEmail', formData.email);
+        navigate('/')
+    };
+    const handleCloseErrorModal = () => {
+        setIsErrorModalOpen(false);
     };
     const isPasswordMatch = () => {
         return formData.password === formData.confirmPassword;
     };
+
     return (
         <div className="signup-container">
             <div className={styles.signupCard}>
@@ -86,9 +102,9 @@ const Signup = () => {
                                                                src={process.env.PUBLIC_URL + '/img/A-mall2.png'}/></Link>
 
                 <div className={styles.signUpText}>회원정보를 입력해주세요</div>
-
+                <form onSubmit={handleSubmitForm}>
                     <div className={styles.signUpFormBox}>
-                        <div className={styles.iconBox} >
+                        <div className={styles.iconBox}>
                             <img className={styles.emailIcon} src={process.env.PUBLIC_URL + '/img/Person.png'}/>
                         </div>
                         <div style={{grid: 1}}>
@@ -106,7 +122,7 @@ const Signup = () => {
 
                     </div>
                     <div className={styles.signUpFormBox}>
-                        <div className={styles.iconBox} >
+                        <div className={styles.iconBox}>
                             <img className={styles.emailIcon} src={process.env.PUBLIC_URL + '/img/Email-icon.png'}/>
                         </div>
                         <div style={{grid: 1}}>
@@ -123,7 +139,7 @@ const Signup = () => {
                         </div>
                     </div>
                     <div className={styles.signUpFormBox}>
-                        <div className={styles.iconBox} >
+                        <div className={styles.iconBox}>
                             <img className={styles.emailIcon}
                                  style={{width: "100%", height: "100%", objectFit: "cover"}}
                                  src={process.env.PUBLIC_URL + '/img/password-icon.png'}/>
@@ -142,8 +158,8 @@ const Signup = () => {
                         </div>
 
                     </div>
-                    <div  className={styles.signUpFormBox}>
-                        <div className={styles.iconBox} >
+                    <div className={styles.signUpFormBox}>
+                        <div className={styles.iconBox}>
                             <img className={styles.emailIcon}
                                  src={process.env.PUBLIC_URL + '/img/password-confirm.png'}/>
                         </div>
@@ -161,13 +177,13 @@ const Signup = () => {
                         </div>
                     </div>
                     {formData.password && formData.confirmPassword && !isPasswordMatch() && (
-                        <span style={{ color: 'red' }}>비밀번호가 일치하지 않습니다.</span>
+                        <span style={{color: 'red'}}>비밀번호가 일치하지 않습니다.</span>
                     )}
                     {formData.password && formData.confirmPassword && isPasswordMatch() && (
-                        <span style={{ color: 'green' }}>비밀번호가 일치합니다.</span>
+                        <span style={{color: 'green'}}>비밀번호가 일치합니다.</span>
                     )}
                     <div className={styles.signUpFormBox}>
-                        <div className={styles.iconBox} >
+                        <div className={styles.iconBox}>
                             <img className={styles.emailIcon} src={process.env.PUBLIC_URL + '/img/address-icon.png'}/>
                         </div>
                         <div style={{grid: 1}}>
@@ -184,7 +200,7 @@ const Signup = () => {
                         </div>
                     </div>
                     <div className={styles.signUpFormBox}>
-                        <div className={styles.iconBox} >
+                        <div className={styles.iconBox}>
                             <img className={styles.emailIcon} src={process.env.PUBLIC_URL + '/img/phone-icon.png'}/>
                         </div>
                         <div style={{grid: 1}}>
@@ -231,21 +247,22 @@ const Signup = () => {
                     </div>
                     <CheckBoxExample handleCheckboxChange={handleCheckboxChange}/>
                     <button
-                        className={`${styles.signUpSubmitButton} ${isButtonEnabled ? styles.activeButton : styles.disabledButton}`}
-                        type="submit" disabled={!isButtonEnabled} onClick={handleSubmit}>가입하기
+                        className={`${styles.signUpSubmitButton} ${
+                            isButtonEnabled ? styles.activeButton : styles.disabledButton
+                        }`}
+                        type="submit"
+                        disabled={!isButtonEnabled}
+                    >
+                        가입하기
                     </button>
-                    {isModalOpen && (
-                        <div className={styles.modalBackdrop}>
-                            <div className={styles.modal}>
-                <span className={styles.close} onClick={handleCloseModal}>
-                  &times;
-                </span>
-                                <div className={styles.modalContent}>
-                                    <p>모달 내용</p>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+                </form>
+                {isModalOpen && (
+                    <>
+                        <div className={styles.modalBackdrop}/>
+                        <Modal formData={formData} handleCloseModal={handleCloseModal}/>
+                    </>
+                )}
+                {isErrorModalOpen && (<ErrorModal handleCloseErrorModal={handleCloseErrorModal}/>)}
             </div>
         </div>
     );
@@ -265,5 +282,52 @@ const CheckBoxExample = ({handleCheckboxChange}) => {
     );
 };
 
+function Modal({formData, handleCloseModal}) {
+    return (
+        <div className={styles.modalBackdrop}>
+            <div className={styles.modal}>
+                <div className={styles.closeButton} onClick={() => {
+                    handleCloseModal()
+                }}>
+                    X
+                </div>
+                <div className={styles.modalContent}>
+                    <div><img className={styles.welcomeImg} src={process.env.PUBLIC_URL + '/img/welcome.png'}/></div>
+                    <div><img className={styles.modalImg} src={process.env.PUBLIC_URL + '/img/A-mall2.png'}/></div>
+                    <div className={styles.modalText0}>
+                        <div className={styles.modalText1}>{formData.username}</div>
+                        <div className={styles.modalText2}>님</div>
+                    </div>
+                    <div className={styles.modalText3}>A-Mall 회원가입을 축하합니다.</div>
+
+                </div>
+                <div className={styles.madeBy}>A-Mall Made by ANTL</div>
+            </div>
+        </div>
+    );
+}
+
+function ErrorModal({handleCloseErrorModal}) {
+    return (
+        <div className={styles.modalBackdrop}>
+        <div className={styles.errormodal}>
+            <div className={styles.closeButton} onClick={() => {
+                handleCloseErrorModal()
+            }}>
+                X
+            </div>
+            <div className={styles.modalContent}>
+                <div><img className={styles.modalImg} src={process.env.PUBLIC_URL + '/img/A-mall2.png'}/></div>
+                <div className={styles.modalText0}>
+
+                </div>
+                <div className={styles.modalText3}>중복된 아이디입니다.</div>
+
+            </div>
+            <div className={styles.madeBy}>A-Mall Made by ANTL</div>
+        </div>
+        </div>
+    );
+}
 
 export default Signup;

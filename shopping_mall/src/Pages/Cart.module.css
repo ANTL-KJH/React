@@ -4,16 +4,15 @@
     margin-right: 10%;
 }
 .cartProductImage{
+    width: auto;
+    height: auto;
+    max-height: 10vh;
 
-    max-width: 100%;
-
-    border:1px solid #cccccc;
 }
 .customCartRowHead{
     margin-bottom: 1vh;
     display: flex;
     align-items: center;
-
 
 }
 .customCartRowHead :first-child{
@@ -21,12 +20,52 @@
 
 }
 .customCartRowHead:not(:last-child) {
+
     border-bottom: 1px solid #ccc; /* 구분선 스타일 */
     padding-bottom: 10px; /* 원하는 여백 조정 */
+}
+.customCartHeadImage{
+    display: flex;
+    width: 8%;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+.customCartHeadProductName{
+    font-size: 20px;
+    font-family: "LINESpeedKR_Regular", serif;
+    width: 27%;
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+.customCartHeadProductAmount{
+    font-size: 20px;
+    font-family: "LINESpeedKR_Regular", serif;
+    width: 10%;
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+.customCartHeadProductPrice{
+    font-size: 20px;
+    font-family: "LINESpeedKR_Regular", serif;
+    width: 20%;
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+.customCartHeadProductTotalPrice{
+    font-size: 20px;
+    font-family: "LINESpeedKR_Regular", serif;
+    width: 20%;
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
 }
 .customCartColImage{
     display: flex;
     width: 8%;
+    border:1px solid #cccccc;
     justify-content: center; /* 수평 가운데 정렬 */
     align-items: center; /* 수직 가운데 정렬 */
 }
@@ -37,24 +76,32 @@
     align-items: center; /* 수직 가운데 정렬 */
 }
 .customCartColProductName{
+    font-size: 16px;
+    font-family: "LINESpeedKR_Regular", serif;
     width: 27%;
     display: flex;
     justify-content: center; /* 수평 가운데 정렬 */
     align-items: center; /* 수직 가운데 정렬 */
 }
 .customCartColProductAmount{
+    font-size: 16px;
+    font-family: "LINESpeedKR_Regular", serif;
     width: 10%;
     display: flex;
     justify-content: center; /* 수평 가운데 정렬 */
     align-items: center; /* 수직 가운데 정렬 */
 }
 .customCartColProductPrice{
+    font-size: 16px;
+    font-family: "LINESpeedKR_Regular", serif;
     width: 20%;
     display: flex;
     justify-content: center; /* 수평 가운데 정렬 */
     align-items: center; /* 수직 가운데 정렬 */
 }
 .customCartColProductTotalPrice{
+    font-size: 16px;
+    font-family: "LINESpeedKR_Regular", serif;
     width: 20%;
     display: flex;
     justify-content: center; /* 수평 가운데 정렬 */
@@ -71,14 +118,41 @@
 }
 
 .customCartEndRow :first-child{
+    font-size: 18px;
+    font-family: "LINESpeedKR_Regular", serif;
     margin-left: 3%;
     margin-right: 5%;
 }
 .customCartEndRow > div:nth-child(2) {
+    font-size: 18px;
+    font-family: "LINESpeedKR_Regular", serif;
     margin-right: 10%;
 }
 
 
 .customCartEndRow :last-child{
+    font-size: 18px;
+    font-family: "LINESpeedKR_Regular", serif;
     margin-right:3%
+}
+.purchaseButtonWrapper {
+    text-align: right;
+    margin-top: 10px; /* Add margin to create space between the end row and the button */
+}
+.purchaseBtn{
+    width: 25%;
+    height: 7vh;
+    border-color: #6666ff;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #6666ff;
+    color: white;
+    font-family: LINESpeedKR_Regular, serif;
+}
+.purchaseBtn:disabled {
+    border-color: lightgray;
+    border-radius: 6px;
+    background-color: lightgray;
+    cursor: not-allowed;
 }

@@ -5,7 +5,7 @@ import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate} from 'react-router-dom';
 import Loading from "../components/Loading";
-import {changeLoginState, changeProductDetail, changeUserData} from "../store";
+import {changeLoginState, changeUserData} from "../store";
 
 function Checkout() {
 
@@ -16,13 +16,17 @@ function Checkout() {
 }
 
 function CheckoutPage() {
-    let checkoutItemData = localStorage.getItem('checkoutData');
+    let checkoutItemData = JSON.parse(localStorage.getItem('checkoutData'));
+    console.log("aaaa", checkoutItemData)
+
+    // checkoutData에서 id만 추출하여 ID 배열 생성
+    const productIDs = checkoutItemData.map(item => ({productID: item.productID}));
+    console.log("bbbb", productIDs)
 
 
-
-    const productDetail = useSelector((state) => state.productDetail);
+    const [productDetail, setproductDetail] = useState([]);
     const [loading, setLoading] = useState(true); // 로딩 상태를 추가합니다.
-    const [addressIndex, setaddressIndex]= useState(0);
+    const [addressIndex, setaddressIndex] = useState(0);
     let navigate = useNavigate();
     let dispatch = useDispatch();
     let serverAddr = useSelector((state) => state.serverAddr.serverAddress);
@@ -35,7 +39,7 @@ function CheckoutPage() {
     const [paymentMethod, setPaymentMethod] = useState(""); // 상태값 추가
     const cancelRequest = useRef(null);
     const [receiverInfo, setReceiverInfo] = useState([{
-        deliveryid:'',
+        deliveryid: '',
         name: '',
         address: '',
         phoneNumber: ''
@@ -78,16 +82,17 @@ function CheckoutPage() {
                 }
             });
         axios
-            .post(`${serverAddr}/api/ProductDetail`, { productid: JSON.parse(checkoutItemData).productId })
+            .post(`${serverAddr}/api/Products`, productIDs)
             .then((response) => {
-                console.log(`${serverAddr}/api/ProductDetail`);
-                dispatch(changeProductDetail(response.data));
-                console.log(response.data);
+                console.log("cccc", response.data);
+                setproductDetail(response.data);
+                sessionStorage.setItem('purchaseProductData', JSON.stringify(response.data));
                 setLoading(false); // 데이터를 받아온 후 로딩 상태 변경
             })
             .catch((error) => {
                 if (!axios.isCancel(error)) {
                     navigate('/error');
+
                 }
                 setLoading(false); // 에러 발생 시에도 로딩 상태 변경
             });
@@ -111,7 +116,7 @@ function CheckoutPage() {
         }));
     };
     const handleOpenModal = () => {
-        setShowModal("1111",true);
+        setShowModal("1111", true);
     };
 
     const handleCloseModal = (index) => {
@@ -122,11 +127,30 @@ function CheckoutPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response =await axios.post(`${serverAddr}/api/Order`,[{"user_email": localStorage.getItem('userEmail'),"deliveryid":receiverInfo[addressIndex].deliveryid,"productID":parseInt(JSON.parse(checkoutItemData).productId),"amount":JSON.parse(checkoutItemData).amount}]);
-            console.log([{"user_email": localStorage.getItem('userEmail'),"deliveryid":receiverInfo[addressIndex].deliveryid,"productID":parseInt(JSON.parse(checkoutItemData).productId),"amount":JSON.parse(checkoutItemData).amount}])
-
+            const userEmail = localStorage.getItem('userEmail');
+            const data = checkoutItemData.map(item => ({
+                "user_email": userEmail,
+                "deliveryid": receiverInfo[addressIndex].deliveryid,
+                "productID": item.productID,
+                "amount": item.amount
+            }));
+            console.log("dddd", data)
+            const response = await axios.post(`${serverAddr}/api/Order`, data);
             if (response.data === true) {
-                localStorage.setItem('pruchaseInfo',JSON.stringify({productid: JSON.parse(checkoutItemData).productId, amount:JSON.parse(checkoutItemData).amount, receiverName:receiverInfo[addressIndex].name,receiverAddr:receiverInfo[addressIndex].address, receiverPhoneNumber:receiverInfo[addressIndex].phoneNumber}));
+                await localStorage.setItem(
+                    'pruchaseInfo',
+                    JSON.stringify({
+                        "receiverName": receiverInfo[addressIndex].name,
+                        "receiverAddr": receiverInfo[addressIndex].address,
+                        "phoneNumber": receiverInfo[addressIndex].phoneNumber
+                    })
+                );
+                console.log("eeee",{
+                    "receiverName": receiverInfo[addressIndex].name,
+                    "receiverAddr": receiverInfo[addressIndex].address,
+                    "phoneNumber": receiverInfo[addressIndex].phoneNumber
+                })
+
                 navigate('/checkoutsuccess'); // 로그인 성공 후 이동할 페이지
 
             } else {
@@ -137,6 +161,16 @@ function CheckoutPage() {
             console.error('Error:', error);
         }
     };
+    const calculateTotalPrice = () => {
+        let totalPrice = 0;
+        productDetail.forEach((item, idx) => {
+            totalPrice += item.price * checkoutItemData[idx].amount;
+        });
+        return totalPrice;
+    };
+
+// 총 주문 가격 계산
+    const totalOrderPrice = calculateTotalPrice();
     return (
 
         <div className={styles.customCheckoutPage}>
@@ -212,6 +246,8 @@ function CheckoutPage() {
                     </div>
                 </div>
             </div>
+
+
             <div className={styles.checkoutData}>상품정보</div>
             <div className={styles.checkoutCustomerDataBox}>
                 <div className={styles.customCheckoutRow}>
@@ -231,106 +267,112 @@ function CheckoutPage() {
                         총상품가격
                     </div>
                 </div>
-                <div className={styles.customCheckoutRow}>
-                    <div className={styles.customCheckoutProductPicture}>
-                        <img className={styles.productImage} src={process.env.PUBLIC_URL + productDetail.imgpath}/>
+                {productDetail.map((item, idx) => (
+                    <div className={styles.customCheckoutRow} key={idx}>
+                        <div className={styles.customCheckoutProductPicture}>
+                            <img className={styles.productImage} src={process.env.PUBLIC_URL + item.imgpath} alt={`Product ${idx + 1}`} />
+                        </div>
+                        <div className={styles.customCheckoutProductName}>
+                            {item.name}
+                        </div>
+                        <div className={styles.customCheckoutProductPrice}>
+                            {item.price}
+                        </div>
+                        <div className={styles.customCheckoutProductAmount}>
+                            {checkoutItemData[idx].amount}
+                        </div>
+                        <div className={styles.customCheckoutProductTotalPrice}>
+                            {item.price * checkoutItemData[idx].amount}
+                        </div>
                     </div>
-                    <div className={styles.customCheckoutProductName}>
-                        {productDetail.name}
-                    </div>
-                    <div className={styles.customCheckoutProductPrice}>
-                        {productDetail.price}
-                    </div>
-                    <div className={styles.customCheckoutProductAmount}>
-                        {JSON.parse(checkoutItemData).amount}
-                    </div>
-                    <div className={styles.customCheckoutProductTotalPrice}>
-                        {productDetail.price*JSON.parse(checkoutItemData).amount}
-                    </div>
-                </div>
-            </div>
-            <div className={styles.checkoutData}>결제정보</div>
-            <div className={styles.checkoutCustomerDataBox}>
-                <div className={styles.customCheckoutRow}>
-                    <div className={styles.customCheckoutColLeft}>
-                        총 상품가격
-                    </div>
-                    <div className={styles.customCheckoutColRight}>
-                        150000원
-                    </div>
-                </div>
-                <div className={styles.customCheckoutRow}>
-                    <div className={styles.customCheckoutColLeft}>
-                        즉시할인
-                    </div>
-                    <div className={styles.customCheckoutColRight}>
-                        0원
-                    </div>
-                </div>
-                <div className={styles.customCheckoutRow}>
-                    <div className={styles.customCheckoutColLeft}>
-                        할인 쿠폰
-                    </div>
-                    <div className={styles.customCheckoutColRight}>
-                        적용 가능한 할인쿠폰이 없습니다.
-                    </div>
-                </div>
-                <div className={styles.customCheckoutRow}>
-                    <div className={styles.customCheckoutColLeft}>
-                        총결제금액
-                    </div>
-                    <div className={styles.customCheckoutColRight}>
-                        15000원
-                    </div>
-                </div>
-                <div className={styles.customCheckoutRow}>
-                    <div className={styles.customCheckoutColLeftLast}>
-                        결제 방법
-                    </div>
-                    <div className={styles.customCheckoutColRightLast}>
-                        <label style={{marginRight: "20px"}}>
-                            <input
-                                type="radio"
-                                name="paymentMethod"
-                                value="card"
-                                checked={paymentMethod === "card"} // 현재 선택된 값 확인
-                                onChange={handlePaymentMethodChange}
-                            />
-                            카드
-                        </label>
-                        {/* 휴대폰 */}
-                        <label style={{marginRight: "20px"}}>
-                            <input
-                                type="radio"
-                                name="paymentMethod"
-                                value="mobile"
-                                checked={paymentMethod === "mobile"} // 현재 선택된 값 확인
-                                onChange={handlePaymentMethodChange}
-                            />
-                            휴대폰
-                        </label>
-                        {/* 무통장 입금 */}
-                        <label>
-                            <input
-                                type="radio"
-                                name="paymentMethod"
-                                value="bankTransfer"
-                                checked={paymentMethod === "bankTransfer"} // 현재 선택된 값 확인
-                                onChange={handlePaymentMethodChange}
-                            />
-                            무통장 입금
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <button className={styles.customCheckoutPurchaseButton} onClick={handleSubmit}>결제하기</button>
+                ))}
 
+
+            </div>
+    <div className={styles.checkoutData}>결제정보</div>
+    <div className={styles.checkoutCustomerDataBox}>
+        <div className={styles.customCheckoutRow}>
+            <div className={styles.customCheckoutColLeft}>
+                총 상품가격
+            </div>
+            <div className={styles.customCheckoutColRight}>
+                {totalOrderPrice}원
+            </div>
         </div>
-    )
+        <div className={styles.customCheckoutRow}>
+            <div className={styles.customCheckoutColLeft}>
+                즉시할인
+            </div>
+            <div className={styles.customCheckoutColRight}>
+                0원
+            </div>
+        </div>
+        <div className={styles.customCheckoutRow}>
+            <div className={styles.customCheckoutColLeft}>
+                할인 쿠폰
+            </div>
+            <div className={styles.customCheckoutColRight}>
+                적용 가능한 할인쿠폰이 없습니다.
+            </div>
+        </div>
+        <div className={styles.customCheckoutRow}>
+            <div className={styles.customCheckoutColLeft}>
+                총결제금액
+            </div>
+            <div className={styles.customCheckoutColRight}>
+                {totalOrderPrice}원
+            </div>
+        </div>
+        <div className={styles.customCheckoutRow}>
+            <div className={styles.customCheckoutColLeftLast}>
+                결제 방법
+            </div>
+            <div className={styles.customCheckoutColRightLast}>
+                <label style={{marginRight: "20px"}}>
+                    <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="card"
+                        checked={paymentMethod === "card"} // 현재 선택된 값 확인
+                        onChange={handlePaymentMethodChange}
+                    />
+                    카드
+                </label>
+                {/* 휴대폰 */}
+                <label style={{marginRight: "20px"}}>
+                    <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="mobile"
+                        checked={paymentMethod === "mobile"} // 현재 선택된 값 확인
+                        onChange={handlePaymentMethodChange}
+                    />
+                    휴대폰
+                </label>
+                {/* 무통장 입금 */}
+                <label>
+                    <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="bankTransfer"
+                        checked={paymentMethod === "bankTransfer"} // 현재 선택된 값 확인
+                        onChange={handlePaymentMethodChange}
+                    />
+                    무통장 입금
+                </label>
+            </div>
+        </div>
+    </div>
+    <button className={styles.customCheckoutPurchaseButton} onClick={handleSubmit}>결제하기</button>
+
+</div>
+)
 }
-function checkoutPage(){
+
+function checkoutPage() {
 
 }
+
 function Modal({isOpen, handleClose, receiverInfo, addressIndex}) {
     if (!isOpen || !receiverInfo || receiverInfo.length === 0) {
         return null;
@@ -353,7 +395,7 @@ function Modal({isOpen, handleClose, receiverInfo, addressIndex}) {
                         </div>
                     </div>
                 ))}
-                <button onClick={()=>handleClose(addressIndex)}>Close</button>
+                <button onClick={() => handleClose(addressIndex)}>Close</button>
             </div>
         );
     }

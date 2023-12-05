@@ -25,6 +25,7 @@
 .addCart:hover {
     color: #3333ff;
 }
+
 .d1 {
     animation: loadEffect1 0.5s ease-in-out;
 }
@@ -32,9 +33,11 @@
 .d2 {
     animation: loadEffect2 0.5s ease-in-out;
 }
+
 .d3 {
     animation: loadEffect3 0.5s ease-in-out;
 }
+
 @keyframes loadEffect1 {
     0% {
         opacity: 0;
@@ -43,6 +46,7 @@
         opacity: 1;
     }
 }
+
 @keyframes loadEffect2 {
     0% {
         opacity: 0;
@@ -51,6 +55,7 @@
         opacity: 1;
     }
 }
+
 @keyframes loadEffect3 {
     0% {
         opacity: 0;
@@ -71,30 +76,48 @@
 
 @media (max-width: 899px) {
     .customRow {
+        display: flex;
+
+        height: 70vh;
+        justify-content: center;
         flex-direction: column;
+        align-items: center; /* 추가: 수직 가운데 정렬 */
     }
-    .customColImage,
+
+    .customColImage {
+        height: 50%;
+
+        margin-bottom: 5vh;
+    }
+
     .customColContent {
-        max-width: 600px;
         width: 100%;
     }
+
 }
-.customProductDetailPage{
+
+@media (min-width: 900px) {
+    .customRow {
+
+        height: 40vh;
+        display: flex;
+        justify-content: center;
+        align-items: center; /* 추가: 수직 가운데 정렬 */
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+    }
+
+}
+
+.customProductDetailPage {
     margin-top: 3vh;
     margin-left: 10%;
     margin-right: 10%;
     justify-content: center;
 }
-.customRow {
 
-    height: 40vh;
-    display: flex;
-    justify-content: center;
-    align-items: center; /* 추가: 수직 가운데 정렬 */
-    margin-bottom: 1vh;
-}
 
-.customColImage{
+.customColImage {
     max-width: 100%;
     max-height: 100%;
     width: 50%;
@@ -102,39 +125,50 @@
     object-fit: contain; /* 이미지 비율 유지 */
 }
 
-.productDetailTitle{
+.productDetailTitle {
     font-size: 24px;
     font-family: "KBO_Dia_Gothic_bold", serif;
 }
-.productDetailDetail{
+
+.productDetailDetail {
     font-size: 16px;
     font-family: "NanumSquareNeo_Lite", serif;
 }
-.productDetailPrice{
+
+.productDetailPrice {
     font-size: 18px;
     font-family: "LINESpeedKR_Regular", serif;
 }
 
-.productQuantityBtn{
+
+.productQuantityBtn {
     background-color: white;
     border: none;
     margin-bottom: 0.8vh;
 }
-.productPlusMinusIcon{
+.purchaseBtn:disabled {
+    background-color: lightgray;
+    cursor: not-allowed;
+}
+.productPlusMinusIcon {
     width: 18px;
 }
+
 .customColContent {
     width: 50%;
     text-align: center; /* 추가: 내용 가운데 정렬 */
 }
-.customTabDetailTitle{
+
+.customTabDetailTitle {
     font-size: 28px;
     font-family: "KBO_Dia_Gothic_bold", serif;
 }
-.customTabDetailDetail{
+
+.customTabDetailDetail {
     font-size: 18px;
     font-family: "NanumSquareNeo_Lite", serif;
 }
+
 .modal {
     position: fixed;
     top: 50%;
@@ -145,11 +179,12 @@
     z-index: 1000;
     border: 2px solid #cccccc;
     background-color: white;
-    padding: 20px;
+    padding: 10px;
     text-align: center; /* 텍스트를 중앙 정렬합니다. */
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* 아래에 여백을 추가하기 위해 사용합니다. */
+
 }
 
 
@@ -165,16 +200,26 @@
 
 
 .modalContent {
-    align-items: ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%;
 }
 
-.modalText{
-
+.modalText {
+    margin-top: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
+
 .closeButton {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 5px;
+    right: 5px;
+    height: 25px;
     background-color: transparent;
     border: none;
     font-size: 20px;
@@ -186,7 +231,6 @@
     font-size: 14px;
     font-weight: bold;
     background-color: #6666ff;
-    margin-bottom: 10px; /* 버튼 아래 여백을 추가합니다. */
     width: 130px;
     height: 30px;
     color: white;
