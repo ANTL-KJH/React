@@ -108,27 +108,25 @@ function MainNavbar({ navigate }) {
 
                 {/* 메뉴 - 조건부 렌더링 */}
                 <div className="navbarMenuGroup">
-                    <Link className="navbarMenuLeft" to={'/'}>Home</Link>
-                    <Link className="navbarMenuLeft" to={'/cart'}>Cart</Link>
-                    <Link className="navbarMenuLeft" to={'/event'}>Event</Link>
-                    <Link className="navbarMenuLeft" to={'/about'}>About</Link>
+
+
                 </div>
 
                 <div className="navbarMenuRightGroup">
+                    {loginState ? <div className="navbarLoginID">{userEmail}님</div>:null}
+                    <Link className="navbarMenuRight" to={'/cart'}><img className="cartIcon" src={process.env.PUBLIC_URL + '/img/cart-icon.png'}/></Link>
+                    {loginState ? <Link to={'/'}><button onClick={()=>{localStorage.clear()}} className="navbarLogout">로그아웃</button></Link>:null}
                     {loginState ? null : <Link className="navbarMenuRight" to={'/login'}>로그인</Link>}
                     {loginState ? null : <Link className="navbarMenuRight" to={'/signup'}>회원가입</Link>}
-                    {loginState ? <div className="navbarLoginID">{userEmail}님</div>:null}
-                    {loginState ? <Link to={'/'}><button onClick={()=>{localStorage.clear()}} className="navbarLogout">로그아웃</button></Link>:null}
+
                 </div>
 
 
             </div>
             {showMenu ? <div className = "hiddenNavbar">
                 <div className="hiddenNavbarRow">
-                    <Link className="hiddenNavbarMenu" to={'/'}>Home</Link>
-                    <Link className="hiddenNavbarMenu" to={'/cart'}>Cart</Link>
-                    <Link className="hiddenNavbarMenu" to={'/event'}>Event</Link>
-                    <Link className="hiddenNavbarMenu" to={'/about'}>About</Link>
+
+                    <Link className="hiddenNavbarMenu" to={'/cart'}>장바구니</Link>
                     {loginState ? <Link onClick={()=>localStorage.clear()} className="hiddenNavbarMenu" to={'/'}>로그아웃</Link>:null}
                     {loginState ? null : <Link className="hiddenNavbarMenu" to={'/login'}>로그인</Link>}
                     {loginState ? null : <Link className="hiddenNavbarMenu" to={'/signup'}>회원가입</Link>}

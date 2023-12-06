@@ -17,8 +17,7 @@ function Cart() {
     const [cartData, setCartData] = useState([]);
     const [loading, setLoading] = useState(true); // 로딩 상태를 추가합니다.
     useEffect(() => {
-        if(!loginState)
-        {
+        if (!loginState) {
             navigate('/login');
         }
         axios
@@ -39,12 +38,12 @@ function Cart() {
         return <Loading/>; // 로딩 중이면 로딩 컴포넌트를 보여줍니다.
     }
     return (
-        <CartProductCard cartData={cartData}/>
+        <CartProductCard cartData={cartData} setCartData={setCartData}/>
     )
 
 }
 
-function CartProductCard({cartData}) {
+function CartProductCard({cartData, setCartData}) {
     let navigate = useNavigate();
     let dispatch = useDispatch();
     let serverAddr = useSelector((state) => state.serverAddr.serverAddress);
@@ -85,12 +84,38 @@ function CartProductCard({cartData}) {
     useEffect(() => {
         checkSelectedProducts(checkboxStates); // 체크박스 상태가 변경될 때마다 실행하여 버튼 상태 업데이트
     }, [checkboxStates]);
-
-    const handleOrder = async() => {
+    const handleSubmit = async (removeData) => {
+        try {
+            console.log("삭제할상품", removeData);
+            const response = await axios.post(`${serverAddr}/api/CartDelete`, removeData)
+                .then(response => {
+                    setCartData(response.data);
+                })
+        } catch (error) {
+            // 오류가 발생한 경우 에러 핸들링을 할 수 있습니다.
+            console.error('Error:', error);
+        }
+    };
+    const handleRemoveAll = () => {
+        const removeData = cartData.map((product) => ({
+            "user_email": localStorage.getItem('userEmail'),
+            "productid": product.productid
+        }));
+        handleSubmit(removeData);
+    };
+    const handleRemoveSingle = (productID) => {
+        // 개별 상품의 ID를 출력합니다.
+        const removeData = [{"user_email": localStorage.getItem('userEmail'), "productid": productID}]
+        handleSubmit(removeData)
+    };
+    const handleOrder = async () => {
         const selectedProducts = cartData.filter((_, index) => checkboxStates[index]);
-        const selectedProductIDs = selectedProducts.map((product) => ({ "productID": product.productid,"amount":product.amount }));
+        const selectedProductIDs = selectedProducts.map((product) => ({
+            "productID": product.productid,
+            "amount": product.amount
+        }));
         localStorage.setItem('checkoutData', JSON.stringify(selectedProductIDs));
-        let a= JSON.parse(localStorage.getItem('checkoutData'));
+        let a = JSON.parse(localStorage.getItem('checkoutData'));
         console.log(a);
         navigate('/checkout')
         {/*try {
@@ -110,7 +135,8 @@ function CartProductCard({cartData}) {
         } catch (error) {
             // 오류가 발생한 경우 에러 핸들링을 할 수 있습니다.
             console.error('Error:', error);
-        }*/}
+        }*/
+        }
     };
 
     // 배송비는 예시로 0원으로 가정
@@ -118,7 +144,6 @@ function CartProductCard({cartData}) {
 
     // 주문 총액 계산 (상품 총액 + 배송비)
     const totalOrderAmount = totalProductPrice + shippingCost;
-
 
 
     return (
@@ -132,6 +157,9 @@ function CartProductCard({cartData}) {
                 <div className={styles.customCartHeadProductAmount}>수량</div>
                 <div className={styles.customCartHeadProductPrice}>가격</div>
                 <div className={styles.customCartHeadProductTotalPrice}>합계</div>
+                <div className={styles.customCartHeadProductRemoveAll}>
+                    <button className={styles.customCartHeadProductRemoveAllBtn} onClick={handleRemoveAll}>전체삭제</button>
+                </div>
             </div>
             {
                 cartData.map((item, i) =>
@@ -152,6 +180,11 @@ function CartProductCard({cartData}) {
                         <div className={styles.customCartColProductAmount}>{item.amount}</div>
                         <div className={styles.customCartColProductPrice}>{item.price}</div>
                         <div className={styles.customCartColProductTotalPrice}>{item.price * item.amount}</div>
+                        <div className={styles.customCartColProductRemove}>
+                            <button className={styles.customCartColProductRemoveBtn}
+                                    onClick={() => handleRemoveSingle(item.productid)}>X
+                            </button>
+                        </div>
                     </div>
                 )
             }
@@ -162,7 +195,9 @@ function CartProductCard({cartData}) {
 
             </div>
             <div className={styles.purchaseButtonWrapper}>
-                <button className={`${styles.purchaseBtn} ${checkboxStates.some((state) => state) ? '' : styles.disabled}`} onClick={handleOrder}>
+                <button
+                    className={`${styles.purchaseBtn} ${checkboxStates.some((state) => state) ? '' : styles.disabled}`}
+                    onClick={handleOrder}>
                     주문하기
                 </button>
             </div>

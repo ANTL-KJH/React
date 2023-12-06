@@ -42,19 +42,39 @@ function CheckoutSuccess() {
                         productDetail.map((item, idx) => (
 
                             <div className={styles.customCheckoutRow} key={idx}>
-                                <div className={styles.customCheckoutProductPicture}>
+                                <div
+                                    className={`${styles.customCheckoutProductPicture} ${
+                                        idx === productDetail.length - 1 ? styles.customCheckoutProductPictureLast : ''
+                                    }`}
+                                >
                                     <img className={styles.productImage} src={process.env.PUBLIC_URL + item.imgpath}/>
                                 </div>
-                                <div className={styles.customCheckoutProductName}>
+                                <div
+                                    className={`${styles.customCheckoutProductName} ${
+                                        idx === productDetail.length - 1 ? styles.customCheckoutProductNameLast : ''
+                                    }`}
+                                >
                                     {item.name}
                                 </div>
-                                <div className={styles.customCheckoutProductPrice}>
+                                <div
+                                    className={`${styles.customCheckoutProductPrice} ${
+                                        idx === productDetail.length - 1 ? styles.customCheckoutProductPriceLast : ''
+                                    }`}
+                                >
                                     {item.price}
                                 </div>
-                                <div className={styles.customCheckoutProductAmount}>
+                                <div
+                                    className={`${styles.customCheckoutProductAmount} ${
+                                        idx === productDetail.length - 1 ? styles.customCheckoutProductAmountLast : ''
+                                    }`}
+                                >
                                     {checkoutItemData[idx].amount}
                                 </div>
-                                <div className={styles.customCheckoutProductTotalPrice}>
+                                <div
+                                    className={`${styles.customCheckoutProductTotalPrice} ${
+                                        idx === productDetail.length - 1 ? styles.customCheckoutProductTotalPriceLast : ''
+                                    }`}
+                                >
                                     {item.price * checkoutItemData[idx].amount}
                                 </div>
                             </div>

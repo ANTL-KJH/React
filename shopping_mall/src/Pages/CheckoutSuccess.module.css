@@ -51,6 +51,15 @@
     border-right: 1px solid #8888ff;
     border-bottom: 1px solid #8888ff;
 }
+.customCheckoutProductNameLast {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 23%;
+    border-right: 1px solid #8888ff;
+    border-bottom: 2px solid #8888ff;
+}
 .customCheckoutProductPicture {
     display: flex;
     align-items: center;
@@ -60,6 +69,15 @@
     border-right: 1px solid #8888ff;
     border-bottom: 1px solid #8888ff;
 }
+.customCheckoutProductPictureLast{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 28%;
+    border-right: 1px solid #8888ff;
+    border-bottom: 2px solid #8888ff;
+}
 .customCheckoutProductPrice {
     display: flex;
     align-items: center;
@@ -68,6 +86,15 @@
     width: 18%;
     border-right: 1px solid #8888ff;
     border-bottom: 1px solid #8888ff;
+}
+.customCheckoutProductPriceLast {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 18%;
+    border-right: 1px solid #8888ff;
+    border-bottom: 2px solid #8888ff;
 }
 
 .customCheckoutProductAmount {
@@ -79,6 +106,15 @@
     border-right: 1px solid #8888ff;
     border-bottom: 1px solid #8888ff;
 }
+.customCheckoutProductAmountLast {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 13%;
+    border-right: 1px solid #8888ff;
+    border-bottom: 2px solid #8888ff;
+}
 
 .customCheckoutProductTotalPrice {
     display: flex;
@@ -87,6 +123,14 @@
     text-align: center;
     width: 18%;
     border-bottom: 1px solid #8888ff;
+}
+.customCheckoutProductTotalPriceLast{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 18%;
+    border-bottom: 2px solid #8888ff;
 }
 .receiver{
     margin-left: 10%;

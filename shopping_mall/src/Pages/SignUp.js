@@ -13,7 +13,7 @@ const Signup = () => {
         password: '',
         confirmPassword: '',
         address: '',
-        phoneNumber: '',
+        phone_number: '',
         gender: ''
     });
 
@@ -31,7 +31,7 @@ const Signup = () => {
             formData.password !== '' &&
             formData.confirmPassword !== '' &&
             formData.address !== '' &&
-            formData.phoneNumber !== '' &&
+            formData.phone_number !== '' &&
             formData.gender !== '' &&
             formData.password === formData.confirmPassword;
         if (loginState) {
@@ -206,9 +206,9 @@ const Signup = () => {
                         <div style={{grid: 1}}>
                             <input className={styles.signUpInputBox}
                                    type="text"
-                                   id="phoneNumber"
-                                   name="phoneNumber"
-                                   value={formData.phoneNumber}
+                                   id="phone_number"
+                                   name="phone_number"
+                                   value={formData.phone_number}
                                    onChange={handleChange}
                                    onFocus={handleFocus}
                                    onBlur={handleBlur}

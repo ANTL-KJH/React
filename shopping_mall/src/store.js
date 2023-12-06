@@ -54,7 +54,7 @@ let serverAddr = createSlice({
     name: 'serverAddr',
     initialState:
         {
-            serverAddress: 'https://cf92-165-229-229-217.ngrok-free.app'
+            serverAddress: 'https://ba39-165-229-229-217.ngrok-free.app'
         }
 })
 
