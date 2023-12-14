@@ -1,14 +1,14 @@
-import {Table} from "react-bootstrap";
+
 import styles from './Cart.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {changeProductDetail} from "../store";
+
 import Loading from "../components/Loading";
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 function Cart() {
-    let state = useSelector((state) => state)
+
     let navigate = useNavigate();
     let dispatch = useDispatch();
     const loginState = localStorage.getItem("loginState");
@@ -45,7 +45,7 @@ function Cart() {
 
 function CartProductCard({cartData, setCartData}) {
     let navigate = useNavigate();
-    let dispatch = useDispatch();
+
     let serverAddr = useSelector((state) => state.serverAddr.serverAddress);
 
     const [selectAll, setSelectAll] = useState(false);

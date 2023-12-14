@@ -3,9 +3,8 @@ import React, {useEffect, useRef} from "react";
 import {useState} from "react";
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Loading from "../components/Loading";
-import {changeLoginState, changeUserData} from "../store";
 
 function Checkout() {
 
@@ -108,14 +107,7 @@ function CheckoutPage() {
     };
 
 
-    // 받는 분 정보를 입력받는 함수를 생성합니다.
-    const handleReceiverInfoChange = (e) => {
-        const {name, value} = e.target;
-        setReceiverInfo(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
+
     const handleOpenModal = () => {
         setShowModal("1111", true);
     };
@@ -388,10 +380,6 @@ function CheckoutPage() {
 
 </div>
 )
-}
-
-function checkoutPage() {
-
 }
 
 function Modal({isOpen, handleClose, receiverInfo, addressIndex}) {

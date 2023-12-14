@@ -11,9 +11,7 @@ function ProductCard() {
     let serverAddr = useSelector((state) => state.serverAddr.serverAddress);
     let dispatch = useDispatch();
     const cancelRequest = useRef(null);
-    const handleImageClick = (productId) => {
-        navigate(`/product/${productId}`);
-    };
+
     useEffect(() => {
         cancelRequest.current = axios.CancelToken.source();
         axios.post(`${serverAddr}/api/Product`)
