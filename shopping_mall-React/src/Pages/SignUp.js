@@ -1,3 +1,17 @@
+/*
+* Project Name : React Shopping Mall(A-Mall) SignUp
+* Program Purpose and Basic Features :
+    * - A-Mall SignUp, 회원가입 페이지
+* Program Author : JHKIM
+* Date of original creation : 2023.11.30
+* ==========================================================================
+* Program History
+* ==========================================================================
+* Author    	Date		    Version		Content
+* JHKIM			2023.11.30	    v1.0	    First Write
+* JHKIM			2023.12.04	    v1.1	    서버 통신기능 추가
+* JHKIM         2023.12.05      v1.11       입력란 이미지 추가
+*/
 import React, {useState, useEffect} from 'react';
 import styles from "./SignUp.module.css"
 import {Link, useNavigate} from "react-router-dom";

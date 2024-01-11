@@ -1,4 +1,19 @@
-
+/*
+* Project Name : React Shopping Mall(A-Mall) Cart
+* Program Purpose and Basic Features :
+    * - A-Mall Cart, 장바구니 페이지
+* Program Author : JHKIM
+* Date of original creation : 2023.11.30
+* ==========================================================================
+* Program History
+* ==========================================================================
+* Author    	Date		    Version		Content
+* JHKIM			2023.11.30	    v1.0	    First Write
+* JHKIM			2023.12.03	    v1.10	    서버 통신 기능 추가, 서버로 부터 장바구니 데이터 받아옴
+* JHKIM			2023.12.04	    v1.11	    상품 선택 체크박스 구성, 총 가격 계산 기능 추가
+* JHKIM			2023.12.05	    v1.12	    전체삭제 기능 추가
+* JHKIM         2023.12.06	    v1.20	    선택한 상품 서버로 한번에 전송하도록 수정
+*/
 import styles from './Cart.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";

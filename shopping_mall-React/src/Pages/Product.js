@@ -1,3 +1,19 @@
+/*
+* Project Name : React Shopping Mall(A-Mall) Product
+* Program Purpose and Basic Features :
+    * - A-Mall Product, 상품 상세 페이지
+* Program Author : JHKIM
+* Date of original creation : 2023.11.30
+* ==========================================================================
+* Program History
+* ==========================================================================
+* Author    	Date		    Version		Content
+* JHKIM			2023.11.30	    v1.0	    First Write
+* JHKIM         2023.12.01      v1.10       화면 크기에 따라 다른 포맷으로 출력되도록 변경
+* JHKIM			2023.12.04	    v1.11	    서버통신기능 추가
+* JHKIM         2023.12.05      v1.20       장바구니 추가기능/구매기능 추가
+* JHKIM         2023.12.06      v1.21       장바구니 추가 팝업화면 추가
+*/
 import React, {useEffect, useState} from 'react';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import styles from './Product.module.css';
@@ -16,7 +32,7 @@ function Product(props) {
     let dispatch = useDispatch();
     const productDetail = useSelector((state) => state.productDetail);
     const [quantity, setQuantity] = useState(1);
-    const [loading, setLoading] = useState(true); // 로딩 상태를 추가합니다.
+    const [loading, setLoading] = useState(true); // 로딩 상태
 
     const incrementQuantity = () => {
         setQuantity((prevQuantity) => prevQuantity + 1);
@@ -50,10 +66,9 @@ function Product(props) {
             if (response.data === true) {
 
             } else {
-                // 로그인 실패 시, 처리 로직 추가
+                // 로그인 실패
             }
         } catch (error) {
-            // 오류가 발생한 경우 에러 핸들링을 할 수 있습니다.
             console.error('Error:', error);
         }
     };
@@ -174,7 +189,6 @@ function Modal({ setShowModal,handleCloseModal }) {
                 <Link to={'/Cart'}>
                     <button className={styles.toCartButton}>장바구니로 이동</button>
                 </Link>
-                {/* 추가적인 내용은 여기에 추가할 수 있습니다. */}
             </div>
         </div>
     );

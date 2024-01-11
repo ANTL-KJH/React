@@ -1,7 +1,18 @@
-import {useParams} from "react-router-dom";
+/*
+* Project Name : React Shopping Mall(A-Mall) Error
+* Program Purpose and Basic Features :
+    * - A-Mall Error, 에러 페이지
+* Program Author : JHKIM
+* Date of original creation : 2023.12.04
+* ==========================================================================
+* Program History
+* ==========================================================================
+* Author    	Date		    Version		Content
+* JHKIM			2023.12.04	    v1.0	    First Write
+*/
 import './Product.module.css';
 import styles from './Error.module.css';
-function ErrorPage(props) {
+function ErrorPage() {
     return (
         <div className="redirectContainer">
             <div className="contentWrapper">

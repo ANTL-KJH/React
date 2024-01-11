@@ -1,5 +1,15 @@
-import {useParams} from "react-router-dom";
-
+/*
+* Project Name : React Shopping Mall(A-Mall) Not Found
+* Program Purpose and Basic Features :
+    * - A-Mall Not Found, 페이지를 찾을 수 없음을 출력
+* Program Author : JHKIM
+* Date of original creation : 2023.11.29
+* ==========================================================================
+* Program History
+* ==========================================================================
+* Author    	Date		    Version		Content
+* JHKIM			2023.11.29	    v1.0	    First Write
+*/
 function NotFoundPage(props) {
     return (
         <div className="redirectContainer">

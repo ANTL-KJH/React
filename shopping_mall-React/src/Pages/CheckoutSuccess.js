@@ -1,3 +1,15 @@
+/*
+* Project Name : React Shopping Mall(A-Mall) CheckoutSuccess
+* Program Purpose and Basic Features :
+    * - A-Mall CheckoutSuccess, 구매 성공시 이동하는 페이지
+* Program Author : JHKIM
+* Date of original creation : 2023.12.04
+* ==========================================================================
+* Program History
+* ==========================================================================
+* Author    	Date		    Version		Content
+* JHKIM			2023.12.04	    v1.0	    First Write
+*/
 import styles from './CheckoutSuccess.module.css';
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
@@ -13,8 +25,6 @@ function CheckoutSuccess() {
     let dispatch = useDispatch();
     const [productDetail, setproductDetail] = useState(JSON.parse(sessionStorage.getItem('purchaseProductData')));
 
-    //console.log("ffff", checkoutItemData)
-    //console.log("rrrr",receiverData)
     const calculateTotalPrice = () => {
         let totalPrice = 0;
         productDetail.forEach((item, idx) => {
@@ -24,7 +34,7 @@ function CheckoutSuccess() {
     };
 
 
-// 총 주문 가격 계산
+    // 총 주문 가격 계산
     const totalOrderPrice = calculateTotalPrice();
     return (
         <div className={styles.successPage}>

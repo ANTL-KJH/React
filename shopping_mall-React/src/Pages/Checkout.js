@@ -1,3 +1,20 @@
+/*
+* Project Name : React Shopping Mall(A-Mall) Checkout
+* Program Purpose and Basic Features :
+    * - A-Mall Checkout, 결제 페이지
+* Program Author : JHKIM
+* Date of original creation : 2023.11.30
+* ==========================================================================
+* Program History
+* ==========================================================================
+* Author    	Date		    Version		Content
+* JHKIM			2023.11.30	    v1.0	    First Write
+* JHKIM			2023.12.01	    v1.1	    서버 통신기능 추가
+* JHKIM			2023.12.02	    v1.11	    구매자 및 수령자 구분
+* JHKIM			2023.12.03	    v1.12	    수령지 변경 기능 추가
+* JHKIM			2023.12.04	    v1.20	    구매 물품 확인 기능 추가
+* JHKIM			2023.12.05	    v1.21	    구메페이지 디자인 수정
+*/
 import styles from "./Checkout.module.css";
 import React, {useEffect, useRef} from "react";
 import {useState} from "react";
