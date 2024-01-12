@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import ButtonControl from './Pages/button';
 import Home from './Pages/Home';
-
+import { Provider } from 'react-redux';
 function App() {
     return (
         <div className="appContainer">
