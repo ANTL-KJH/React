@@ -1,7 +1,7 @@
 /* button.module.css */
 
 .redButton {
-    background-color: red;
+    background-color: #990000;
     color: white;
     padding: 10px 20px;
     font-size: 16px;
@@ -11,7 +11,7 @@
 }
 
 .greenButton {
-    background-color: green;
+    background-color: #008800;
     color: white;
     padding: 10px 20px;
     font-size: 16px;
@@ -20,10 +20,37 @@
 }
 
 .blueButton {
-    background-color: blue;
+    background-color: #000099;
     color: white;
     padding: 10px 20px;
     font-size: 16px;
     border: none;
     cursor: pointer;
+}
+.clickedRed {
+    background-color: #ff4444;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+.clickedGreen {
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+.clickedBlue {
+    background-color: #4444ff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
 }
